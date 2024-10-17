@@ -1,0 +1,133 @@
+/* Movie Form Container */
+.form-container {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-family: "Arial", sans-serif;
+}
+
+/* Form Header */
+.form-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* Input Fields Styling */
+.form-container label {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.form-container input[type="text"],
+.form-container input[type="url"],
+.form-container input[type="number"],
+.form-container input[type="date"],
+.form-container input[type="checkbox"],
+.form-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.form-container input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+.form-container textarea {
+  resize: vertical;
+}
+
+/* Placeholder Styling */
+.form-container input::placeholder,
+.form-container textarea::placeholder {
+  color: #888;
+  font-size: 14px;
+}
+
+/* Button Styling */
+.form-container button[type="submit"],
+.form-container button[type="button"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-container button[type="submit"]:hover,
+.form-container button[type="button"]:hover {
+  background-color: #45a049;
+}
+
+/* Screenshot Section */
+.form-container h3 {
+  margin-top: 30px;
+  font-size: 20px;
+  color: #333;
+}
+
+.form-container button[type="button"] {
+  background-color: #007bff;
+}
+
+.form-container button[type="button"]:hover {
+  background-color: #0056b3;
+}
+
+/* Screenshot Container */
+.form-container div {
+  margin-bottom: 15px;
+}
+
+/* Screenshot Delete Button */
+.form-container button[type="button"].remove-button {
+  background-color: #dc3545;
+  margin-top: 10px;
+}
+
+.form-container button[type="button"].remove-button:hover {
+  background-color: #c82333;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 20px;
+  }
+
+  .form-container h2 {
+    font-size: 20px;
+  }
+
+  .form-container input[type="text"],
+  .form-container input[type="url"],
+  .form-container input[type="number"],
+  .form-container input[type="date"],
+  .form-container textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .form-container button[type="submit"],
+  .form-container button[type="button"] {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
