@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AdminLogin from "./components/Login/adminLogin";
+// Create this component for the admin panel
+// import PrivateRoute from "./components/PrivateRoute";
+// import AdminPanel from "./components/AdminPanel";
+// import MovieList from "./components/AdminPanel/MovieList";
+import MovieCreate from "./components/AdminPanel/MovieCreate";
+import MovieList from "./components/AdminPanel/MoviesList";
+import WebSeriesCreate from "./components/AdminPanel/WebSeriesCreate";
+import WebSeriesList from "./components/AdminPanel/WebSeriesList";
+import Navbar from "./components/Pages/navbar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route exact path="/login" Component={AdminLogin} />
+        {/* {/* <Route exact path="/admin" Component={AdminPanel} /> */}
+        <Route exact path="/admin/createmovie" Component={MovieCreate} />
+        <Route exact path="/admin/updatemovie" Component={MovieList} />
+        <Route
+          exact
+          path="/admin/createwebseries"
+          Component={WebSeriesCreate}
+        />
+        <Route exact path="/admin/updatewebseries" Component={WebSeriesList} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
