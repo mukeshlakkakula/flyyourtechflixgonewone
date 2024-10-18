@@ -1,7 +1,7 @@
-// src/components/MovieList.js
 import React, { useEffect, useState } from "react";
 import { databases } from "../AppWrite/appwriteLoginConfig";
 import MovieUpdate from "./MovieUpdate";
+import "./MovieList.css"; // Import the CSS file for styling
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
@@ -48,30 +48,46 @@ const MovieList = () => {
 
   const searchMovie = (e) => {
     setSearchTitle(e.target.value);
-    console.log("mvn", searchTitle);
   };
-  let searchMovies = movies.filter((each) =>
-    each.movie_title.toLowerCase().includes(searchTitle.toLowerCase())
+
+  const searchMovies = movies.filter((movie) =>
+    movie.movie_title.toLowerCase().includes(searchTitle.toLowerCase())
   );
 
   return (
-    <div>
+    <div className="movie-list-container">
       {selectedMovieId && (
         <MovieUpdate
           movieId={selectedMovieId}
           onClose={handleCloseUpdateForm}
         />
       )}
-      <h2>Movie List</h2>
-      <input type="search" onChange={searchMovie} />
-      <ul>
+      <h2 className="movie-list-title">Movie List</h2>
+      <input
+        type="search"
+        className="search-input"
+        placeholder="Search by movie title"
+        value={searchTitle}
+        onChange={searchMovie}
+      />
+      <ul className="movie-list">
         {searchMovies.map((movie) => (
-          <li key={movie.movie_id}>
-            <h2 className="w-75">{movie.movie_title}</h2>
-            <button onClick={() => handleUpdateClick(movie.movie_id)}>
-              Update
-            </button>
-            <button onClick={() => handleDelete(movie.movie_id)}>Delete</button>
+          <li key={movie.movie_id} className="movie-item">
+            <h3 className="movie-title">{movie.movie_title}</h3>
+            <div className="movie-actions">
+              <button
+                className="update-btn"
+                onClick={() => handleUpdateClick(movie.movie_id)}
+              >
+                Update
+              </button>
+              <button
+                className="delete-btn"
+                onClick={() => handleDelete(movie.movie_id)}
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>

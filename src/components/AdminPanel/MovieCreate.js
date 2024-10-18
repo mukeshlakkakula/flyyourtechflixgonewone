@@ -61,7 +61,9 @@ const MovieCreate = () => {
       console.log("Movie details added successfully!");
       setMovieName("");
       setMovieId(uuidv4());
-      setMovieImages([{ movie_images_id: uuidv4(), image_url: "" }]);
+      setMovieImages([
+        { movie_images_id: uuidv4(), image_url: "", description: "" },
+      ]);
       setMovieTrailerVideo("");
       setMovieTrailerVideo2("");
       setMovieTrailerVideo3("");
@@ -85,7 +87,7 @@ const MovieCreate = () => {
   const handleAddScreenshot = () => {
     setMovieImages((prevMovieImages) => [
       ...prevMovieImages,
-      { image_url: "", movie_images_id: uuidv4() },
+      { image_url: "", movie_images_id: uuidv4(), description: "" },
     ]);
   };
 
