@@ -107,6 +107,7 @@ const MovieCreate = () => {
   return (
     <div className="form-container">
       <h2>Add Movie Details</h2>
+
       <form onSubmit={handleSubmit}>
         <label>Movie Name</label>
         <input
@@ -230,28 +231,28 @@ const MovieCreate = () => {
           required
         />
 
-        <label>Trailer Video (480p)</label>
+        <label>Movie Video in (480p)</label>
         <input
           type="url"
           value={movieTrailerVideo}
           onChange={(e) => setMovieTrailerVideo(e.target.value)}
-          placeholder="Trailer URL for 480p quality"
+          placeholder="Movie URL for 480p quality"
         />
 
-        <label>Trailer Video (720p)</label>
+        <label>Movie Video in (720p)</label>
         <input
           type="url"
           value={movieTrailerVideo2}
           onChange={(e) => setMovieTrailerVideo2(e.target.value)}
-          placeholder="Trailer URL for 720p quality"
+          placeholder="Movie URL for 720p quality"
         />
 
-        <label>Trailer Video (1080p)</label>
+        <label>Movie Video in (1080p)</label>
         <input
           type="url"
           value={movieTrailerVideo3}
           onChange={(e) => setMovieTrailerVideo3(e.target.value)}
-          placeholder="Trailer URL for 1080p quality"
+          placeholder="Movie URL for 1080p quality"
         />
 
         <h3>Movie Images</h3>

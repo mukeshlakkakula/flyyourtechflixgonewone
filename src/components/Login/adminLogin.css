@@ -1,0 +1,10 @@
+.bg_img {
+  background-image: url(../../img/section/section.jpg);
+  background-size: cover;
+  background-position: center; /* Center the image within the element */
+  background-repeat: no-repeat;
+}
+
+.lgOut {
+  cursor: pointer;
+}

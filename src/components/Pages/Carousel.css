@@ -1,0 +1,82 @@
+.custom-carousel-container {
+  position: relative;
+  padding: 0px 20px;
+  margin: 10 auto;
+  width: 100%; /* Ensure the container takes the full width */
+}
+.header_text {
+  padding: 0px 50px;
+}
+/* Carousel Item */
+.custom-carousel-item {
+  padding: 10px;
+  margin: 3px;
+  text-align: center;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  display: block;
+  width: 100%; /* Ensures each item takes full width in its slide */
+  height: 200px; /* Set a height for visibility */
+}
+.slick-track {
+  display: flex !important; /* Ensure the track is flex */
+  /* Add gap between items */
+}
+
+@media (min-width: 1200px) {
+  .slick-track {
+    display: flex !important; /* Ensure the track is flex */
+    /* Add gap between items */
+  }
+  .item_padding {
+    padding: 10px;
+  }
+}
+
+@media (min-width: 576px) {
+  .slick-track {
+    display: flex !important; /* Ensure the track is flex */
+    /* Add gap between items */
+  }
+  .carousel_container {
+    padding: 0px 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .slick-track {
+    display: flex !important; /* Ensure the track is flex */
+    /* Add gap between items */
+  }
+
+  .carousel_container {
+    padding: 0px 10px;
+  }
+  .item_padding {
+    padding: 5px;
+  }
+}
+
+.carousel_container {
+  padding: 0px 20px;
+}
+
+.item_padding {
+  padding: 13px;
+}
+@media (max-width: 576px) {
+  .carousel_container {
+    padding: 0px 10px;
+  }
+  .header_text {
+    padding: 0px 10px;
+  }
+  .item_padding {
+    padding: 3px;
+  }
+}
+
+.card {
+  padding: 10px;
+  background-color: transparent !important;
+}

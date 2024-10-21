@@ -1,0 +1,6 @@
+.mvbg {
+  background-image: url(../../img/home/home__bg.jpg);
+  background-size: cover;
+  background-position: center; /* Center the image within the element */
+  background-repeat: no-repeat;
+}

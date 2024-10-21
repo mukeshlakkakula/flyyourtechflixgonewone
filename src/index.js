@@ -1,10 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import "./css/bootstrap-reboot.min.css";
+import "./css/bootstrap-grid.min.css";
+import "./css/owl.carousel.min.css";
+import "./css/jquery.mCustomScrollbar.min.css";
+import "./css/nouislider.min.css";
+import "./css/ionicons.min.css";
+import "./css/plyr.css";
+import "./css/photoswipe.css";
+import "./css/default-skin.css";
+import "./css/main.css";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />

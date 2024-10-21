@@ -265,30 +265,30 @@ const MovieUpdate = ({ movieId, onClose }) => {
           required
         />
 
-        <label>Trailer Video (480p)</label>
+        <label>Movie Video in (480p)</label>
         <input
           type="url"
           value={movieTrailerVideo}
           onChange={(e) => setMovieTrailerVideo(e.target.value)}
-          placeholder="Trailer video URL for 480p"
+          placeholder="Movie video URL for 480p"
           required
         />
 
-        <label>Trailer Video (720p)</label>
+        <label>Movie Video in (720p)</label>
         <input
           type="url"
           value={movieTrailerVideo2}
           onChange={(e) => setMovieTrailerVideo2(e.target.value)}
-          placeholder="Trailer video URL for 720p"
+          placeholder="Movie video URL for 720p"
           required
         />
 
-        <label>Trailer Video (1080p)</label>
+        <label>Movie Video in (1080p)</label>
         <input
           type="url"
           value={movieTrailerVideo3}
           onChange={(e) => setMovieTrailerVideo3(e.target.value)}
-          placeholder="Trailer video URL for 1080p"
+          placeholder="Movie video URL for 1080p"
           required
         />
 

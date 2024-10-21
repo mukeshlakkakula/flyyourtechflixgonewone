@@ -3,6 +3,10 @@ import { account } from "../AppWrite/appwriteLoginConfig";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+import "./adminLogin.css"; // Create a CSS file to include your styles
+import bgImg from "../../img/section/section.jpg";
+import logo from "../../img/logo.svg";
+
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,36 +57,61 @@ const AdminLogin = () => {
       console.error("Logout failed", err);
     }
   };
-
   return (
-    <div>
-      <h2>Admin Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    <div
+      className="sign section--bg bg_img"
+      style={{ backgroundImage: `url${bgImg}` }}
+    >
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <div className="sign__content">
+              {/* Authorization form */}
+              <form onSubmit={handleLogin} className="sign__form">
+                <a href="index.html" className="sign__logo">
+                  <img src={logo} alt="Logo" />
+                </a>
+
+                <div className="sign__group">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="sign__input"
+                    placeholder="Email"
+                  />
+                </div>
+
+                <div className="sign__group">
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="sign__input"
+                    placeholder="Password"
+                  />
+                </div>
+
+                {error && <p style={{ color: "red" }}>{error}</p>}
+
+                <button type="submit" className="sign__btn">
+                  Log in
+                </button>
+
+                <span className="sign__text">
+                  Want to logout{" "}
+                  <a onClick={handleLogout} className="lgOut">
+                    Logout
+                  </a>
+                </span>
+              </form>
+              {/* End authorization form */}
+            </div>
+          </div>
         </div>
-
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
-        <button type="submit">Login</button>
-        <button onClick={handleLogout}>Logout</button>
-      </form>
+      </div>
     </div>
   );
 };
