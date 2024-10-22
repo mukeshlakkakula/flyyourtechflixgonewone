@@ -12,16 +12,6 @@ import NewTvSeries from "./NewTvSeries";
 import ExpectedPremier from "./ExpectedPremier";
 
 const Home = () => {
-  const items = [
-    { content: <div>Item 1</div> },
-    { content: <div>Item 2</div> },
-    { content: <div>Item 3</div> },
-    { content: <div>Item 4</div> },
-    { content: <div>Item 5</div> },
-    { content: <div>Item 6</div> },
-    { content: <div>Item 7</div> },
-    { content: <div>Item 8</div> },
-  ];
   useEffect(() => {}, []);
   return (
     <>
@@ -29,9 +19,10 @@ const Home = () => {
 
       {/* end header */}
       {/* home */}
+
+      {/* home bg */}
       <section className="home">
-        {/* home bg */}
-        <Carousel items={items} />
+        <Carousel />
       </section>
       {/* end home */}
       {/* content */}

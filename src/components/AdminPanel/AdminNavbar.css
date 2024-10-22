@@ -1,0 +1,55 @@
+/* Styling for the admin navbar */
+.admin-navbar {
+  background-color: #0c0c0ca0;
+  padding: 20px;
+
+  border-bottom: 2px solid rgba(179, 23, 23, 0.539);
+}
+
+.admin-navbar-menu {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-navbar-item {
+  margin: 0 1rem;
+}
+
+.admin-navbar-link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+
+  border: 2px solid rgba(255, 0, 0, 0.674);
+  border-radius: 5px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transition: background-color 0.3s ease;
+}
+
+.admin-navbar-link:hover {
+  background-color: rgba(255, 0, 0, 0.608);
+  color: rgb(250, 250, 250);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-navbar-menu {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .admin-navbar-item {
+    margin: 0.5rem 0;
+  }
+
+  .admin-navbar-link {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+}

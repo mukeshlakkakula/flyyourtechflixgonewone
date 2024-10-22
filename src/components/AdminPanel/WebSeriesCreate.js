@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { databases } from "../AppWrite/appwriteLoginConfig";
 import { v4 as uuidv4 } from "uuid";
+import AdminNavbar from "./AdminNavbar";
 
 const WebSeriesCreate = () => {
   const [webseries_id, setWebseries_id] = useState(uuidv4().slice(0, 36)); // Ensure it's within 36 chars
@@ -46,28 +47,31 @@ const WebSeriesCreate = () => {
   };
 
   return (
-    <div>
-      <div className="form-container">
-        <h2>Add Movie Details</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={webseries_title}
-            onChange={(e) => setWebseries_title(e.target.value)}
-            placeholder="Movie Name"
-            required
-          />
-          <input
-            type="text"
-            value={webseries_id}
-            readOnly
-            placeholder="Movie ID (Unique)"
-          />
+    <>
+      <AdminNavbar />
+      <div>
+        <div className="form-container">
+          <h2>Add Movie Details</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={webseries_title}
+              onChange={(e) => setWebseries_title(e.target.value)}
+              placeholder="Movie Name"
+              required
+            />
+            <input
+              type="text"
+              value={webseries_id}
+              readOnly
+              placeholder="Movie ID (Unique)"
+            />
 
-          <button type="submit">Add Movie</button>
-        </form>
+            <button type="submit">Add Movie</button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

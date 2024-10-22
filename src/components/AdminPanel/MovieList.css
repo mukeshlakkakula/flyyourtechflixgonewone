@@ -4,9 +4,17 @@
   margin: 0 auto;
 }
 
+@media (max-width: 786px) {
+  .movie-list-container {
+    padding: 5px;
+  }
+}
+
 .movie-list-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
+  font-weight: bold;
+  color: #fff;
   margin-bottom: 20px;
 }
 
@@ -14,6 +22,7 @@
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
+  color: #fff;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -33,7 +42,7 @@
 }
 
 .movie-title {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: #333;
 }
 

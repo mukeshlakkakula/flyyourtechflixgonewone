@@ -1,0 +1,49 @@
+/* Container to position the dropdown correctly */
+.dropdown-container {
+  position: relative;
+  z-index: 1; /* Ensure dropdown is above other elements */
+}
+
+/* Wrapper for additional control */
+.dropdown-wrapper {
+  width: 200px;
+  position: relative;
+}
+
+/* Base dropdown styles */
+.custom-dropdown {
+  width: 100%;
+  padding: 10px;
+  background-color: #212529;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  transition: height 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  z-index: 1000; /* High z-index to bring it on top of other elements */
+  position: absolute;
+}
+.custom-dropdown::-webkit-scrollbar {
+  width: 1px !important; /* Set the width of the scrollbar */
+}
+/* Default size */
+.custom-dropdown {
+  height: 40px; /* Default height when collapsed */
+  overflow: hidden; /* Hide extra items */
+}
+
+/* When expanded */
+.custom-dropdown.expanded {
+  height: auto;
+  max-height: 180px; /* Maximum height for 6 items */
+  overflow-y: auto; /* Enable scroll when there are more items */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow to dropdown */
+  z-index: 9999; /* Ensure it floats above other elements */
+}
+
+/* Option styles */
+.custom-dropdown option {
+  background-color: #212529;
+}

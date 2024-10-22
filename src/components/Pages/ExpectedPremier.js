@@ -74,14 +74,12 @@ const ExpectedPremier = () => {
                 <a href="#">{each.movie_title}</a>
               </h3>
               <span className="card__category">
-                <a href="#">
-                  {" "}
-                  {apiStatus === apiStatusConstants.success ? (
-                    each.genres.map((each) => <a>{each}</a>)
-                  ) : (
-                    <a>cast</a>
-                  )}{" "}
-                </a>
+                {" "}
+                {apiStatus === apiStatusConstants.success ? (
+                  each.genres.map((each, index) => <a key={index}>{each}</a>)
+                ) : (
+                  <a>cast</a>
+                )}{" "}
               </span>
               <span className="card__rate">
                 <i className="icon ion-ios-star" />
@@ -121,9 +119,9 @@ const ExpectedPremier = () => {
           {/* end card */}
           {/* section btn */}
           <div className="col-12">
-            <a href="/movies#" className="section__btn">
+            <Link to="/movies#" className="section__btn">
               Show more
-            </a>
+            </Link>
           </div>
           {/* end section btn */}
         </div>

@@ -3,6 +3,7 @@ import { databases } from "../AppWrite/appwriteLoginConfig";
 
 import { v4 as uuidv4 } from "uuid";
 import "./MovieForm.css"; // Import the CSS file
+import AdminNavbar from "./AdminNavbar";
 
 const MovieUpdate = ({ movieId, onClose }) => {
   const [movieData, setMovieData] = useState(null);
@@ -110,10 +111,12 @@ const MovieUpdate = ({ movieId, onClose }) => {
         movieId,
         updatedMovieData
       );
+      alert("Movie details updated successfully!");
       console.log("Movie details updated successfully!");
       onClose();
       // Redirect to the movie details page or a suitable page
     } catch (error) {
+      alert(`Error updating movie details:, ${error}`);
       console.error("Error updating movie details:", error);
       setError("Error updating movie details. Please try again.");
     } finally {
@@ -144,195 +147,223 @@ const MovieUpdate = ({ movieId, onClose }) => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="error-message">{error}</div>;
 
+  const handleCheckboxChange = () => {
+    setAvailabilityStatus((prevStatus) => !prevStatus); // Toggle between true and false
+  };
+
   return (
-    <div className="form-container">
-      <h2>Update Movie Details</h2>
-      {successMessage && (
-        <div className="success-message">{successMessage}</div>
-      )}
-      <form onSubmit={handleUpdate}>
-        <label>Movie Name</label>
-        <input
-          type="text"
-          value={movieName}
-          onChange={(e) => setMovieName(e.target.value)}
-          placeholder="Movie Name"
-          required
-        />
+    <>
+      <div className="form-container">
+        <h2>Update Movie Details</h2>
+        {successMessage && (
+          <div className="success-message">{successMessage}</div>
+        )}
+        <form onSubmit={handleUpdate}>
+          <label>Movie Name</label>
+          <input
+            type="text"
+            value={movieName}
+            onChange={(e) => setMovieName(e.target.value)}
+            placeholder="Movie Name"
+            required
+          />
 
-        <label>Description</label>
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="A brief description of the movie"
-          required
-        />
+          <label>Description</label>
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="A brief description of the movie"
+            required
+          />
 
-        <label>Director</label>
-        <input
-          type="text"
-          value={director}
-          onChange={(e) => setDirector(e.target.value)}
-          placeholder="Director's name"
-          required
-        />
+          <label>Director</label>
+          <input
+            type="text"
+            value={director}
+            onChange={(e) => setDirector(e.target.value)}
+            placeholder="Director's name"
+            required
+          />
 
-        <label>Cast</label>
-        <input
-          type="text"
-          value={cast}
-          onChange={(e) => setCast(e.target.value)}
-          placeholder="Comma-separated cast"
-          required
-        />
+          <label>Cast</label>
+          <input
+            type="text"
+            value={cast}
+            onChange={(e) => setCast(e.target.value)}
+            placeholder="Comma-separated cast"
+            required
+          />
 
-        <label>Release Date</label>
-        <input
-          type="date"
-          value={releaseDate}
-          onChange={(e) => setReleaseDate(e.target.value)}
-          required
-        />
+          <label>Release Date</label>
+          <input
+            type="date"
+            value={releaseDate}
+            onChange={(e) => setReleaseDate(e.target.value)}
+            required
+          />
 
-        <label>Duration (in minutes)</label>
-        <input
-          type="number"
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-          placeholder="Duration in minutes"
-          required
-        />
+          <label>Duration (in minutes)</label>
+          <input
+            type="number"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+            placeholder="Duration in minutes"
+            required
+          />
 
-        <label>Languages</label>
-        <input
-          type="text"
-          value={languages}
-          onChange={(e) => setLanguages(e.target.value)}
-          placeholder="Comma-separated languages"
-          required
-        />
+          <label>Languages</label>
+          <input
+            type="text"
+            value={languages}
+            onChange={(e) => setLanguages(e.target.value)}
+            placeholder="Comma-separated languages"
+            required
+          />
 
-        <label>Country</label>
-        <input
-          type="text"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          placeholder="Country"
-          required
-        />
+          <label>Country</label>
+          <input
+            type="text"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            placeholder="Country"
+            required
+          />
 
-        <label>Age Rating</label>
-        <input
-          type="text"
-          value={age_rating}
-          onChange={(e) => setAgeRating(e.target.value)}
-          placeholder="Age rating"
-          required
-        />
+          <label>Age Rating</label>
+          <input
+            type="text"
+            value={age_rating}
+            onChange={(e) => setAgeRating(e.target.value)}
+            placeholder="Age rating"
+            required
+          />
 
-        <label>Thumbnail URL</label>
-        <input
-          type="url"
-          value={thumbnail_url}
-          onChange={(e) => setThumbnailUrl(e.target.value)}
-          placeholder="URL of the movie's thumbnail"
-          required
-        />
+          <label>Thumbnail URL</label>
+          <input
+            type="url"
+            value={thumbnail_url}
+            onChange={(e) => setThumbnailUrl(e.target.value)}
+            placeholder="URL of the movie's thumbnail"
+            required
+          />
 
-        <label>Trailer URL</label>
-        <input
-          type="url"
-          value={trailer_url}
-          onChange={(e) => setTrailerUrl(e.target.value)}
-          placeholder="URL of the movie's trailer"
-          required
-        />
+          <label>Trailer URL</label>
+          <input
+            type="url"
+            value={trailer_url}
+            onChange={(e) => setTrailerUrl(e.target.value)}
+            placeholder="URL of the movie's trailer"
+            required
+          />
 
-        <label>Availability Status</label>
-        <input
-          type="checkbox"
-          checked={availability_status}
-          onChange={(e) => setAvailabilityStatus(e.target.checked)}
-        />
+          <div>
+            <label className="custom-checkbox-label">
+              Availability Status
+              <input
+                type="checkbox"
+                checked={availability_status}
+                onChange={handleCheckboxChange}
+                className="custom-checkbox"
+              />
+              <span className="checkmark"></span>
+            </label>
+            <p>
+              Status:{" "}
+              <span style={{ color: "blue" }}>
+                {availability_status ? "Available" : "Not Available"}
+              </span>
+            </p>
+          </div>
 
-        <label>Genres</label>
-        <input
-          type="text"
-          value={genres}
-          onChange={(e) => setGenres(e.target.value)}
-          placeholder="Comma-separated genres"
-          required
-        />
+          <label>Genres</label>
+          <input
+            type="text"
+            value={genres}
+            onChange={(e) => setGenres(e.target.value)}
+            placeholder="Comma-separated genres"
+            required
+          />
 
-        <label>Movie Video in (480p)</label>
-        <input
-          type="url"
-          value={movieTrailerVideo}
-          onChange={(e) => setMovieTrailerVideo(e.target.value)}
-          placeholder="Movie video URL for 480p"
-          required
-        />
+          <label>Movie Video in (480p)</label>
+          <input
+            type="url"
+            value={movieTrailerVideo}
+            onChange={(e) => setMovieTrailerVideo(e.target.value)}
+            placeholder="Movie video URL for 480p"
+            required
+          />
 
-        <label>Movie Video in (720p)</label>
-        <input
-          type="url"
-          value={movieTrailerVideo2}
-          onChange={(e) => setMovieTrailerVideo2(e.target.value)}
-          placeholder="Movie video URL for 720p"
-          required
-        />
+          <label>Movie Video in (720p)</label>
+          <input
+            type="url"
+            value={movieTrailerVideo2}
+            onChange={(e) => setMovieTrailerVideo2(e.target.value)}
+            placeholder="Movie video URL for 720p"
+            required
+          />
 
-        <label>Movie Video in (1080p)</label>
-        <input
-          type="url"
-          value={movieTrailerVideo3}
-          onChange={(e) => setMovieTrailerVideo3(e.target.value)}
-          placeholder="Movie video URL for 1080p"
-          required
-        />
+          <label>Movie Video in (1080p)</label>
+          <input
+            type="url"
+            value={movieTrailerVideo3}
+            onChange={(e) => setMovieTrailerVideo3(e.target.value)}
+            placeholder="Movie video URL for 1080p"
+            required
+          />
 
-        <h3>Movie Screenshots</h3>
-        {movieimages.map((screenshot, index) => (
-          <div
-            key={screenshot.movie_images_id}
-            className="screenshot-container"
+          <h3>Movie Screenshots</h3>
+          {movieimages.map((screenshot, index) => (
+            <div
+              key={screenshot.movie_images_id}
+              className="screenshot-container"
+            >
+              <label>Screenshot URL</label>
+              <input
+                type="url"
+                value={screenshot.image_url}
+                onChange={(e) =>
+                  handleScreenshotChange(index, "image_url", e.target.value)
+                }
+                placeholder="Screenshot URL"
+                required
+              />
+
+              <label>Screenshot Description</label>
+              <input
+                type="text"
+                value={screenshot.description}
+                onChange={(e) =>
+                  handleScreenshotChange(index, "description", e.target.value)
+                }
+                placeholder="Screenshot description"
+                required
+              />
+              <button
+                type="button"
+                className="w-50 bg-danger"
+                onClick={() => handleRemoveScreenshot(index)}
+              >
+                Remove Screenshot
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            className="w-50 bg-dark"
+            onClick={handleAddScreenshot}
           >
-            <label>Screenshot URL</label>
-            <input
-              type="url"
-              value={screenshot.image_url}
-              onChange={(e) =>
-                handleScreenshotChange(index, "image_url", e.target.value)
-              }
-              placeholder="Screenshot URL"
-              required
-            />
-
-            <label>Screenshot Description</label>
-            <input
-              type="text"
-              value={screenshot.description}
-              onChange={(e) =>
-                handleScreenshotChange(index, "description", e.target.value)
-              }
-              placeholder="Screenshot description"
-              required
-            />
-            <button type="button" onClick={() => handleRemoveScreenshot(index)}>
-              Remove Screenshot
+            Add Screenshot
+          </button>
+          <hr />
+          <div className="text-center w-100 d-flex justify-content-center">
+            <button type="submit" className="w-50" disabled={loading}>
+              {loading ? "Updating Movie..." : "Update Movie"}
             </button>
           </div>
-        ))}
-        <button type="button" onClick={handleAddScreenshot}>
-          Add Screenshot
-        </button>
-
-        <button type="submit" disabled={loading}>
-          {loading ? "Updating Movie..." : "Update Movie"}
-        </button>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 };
 

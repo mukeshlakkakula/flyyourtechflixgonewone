@@ -1,7 +1,13 @@
 import React from "react";
+import AdminNavbar from "./AdminNavbar";
 
 const WebSeriesUpdate = () => {
-  return <div>WebSeriesUpdate</div>;
+  return (
+    <div>
+      <AdminNavbar />
+      WebSeriesUpdate
+    </div>
+  );
 };
 
 export default WebSeriesUpdate;

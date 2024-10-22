@@ -75,14 +75,14 @@ const NewReleases = () => {
                     <a href="#">{each.movie_title}</a>
                   </h3>
                   <span className="card__category">
-                    <a href="#">
-                      {" "}
-                      {apiStatus === apiStatusConstants.success ? (
-                        each.genres.map((each) => <a>{each}</a>)
-                      ) : (
-                        <a>cast</a>
-                      )}{" "}
-                    </a>
+                    {" "}
+                    {apiStatus === apiStatusConstants.success ? (
+                      each.genres.map((each, index) => (
+                        <a key={index}>{each}</a>
+                      ))
+                    ) : (
+                      <a>cast</a>
+                    )}{" "}
                   </span>
                   <div className="card__wrap">
                     <span className="card__rate">

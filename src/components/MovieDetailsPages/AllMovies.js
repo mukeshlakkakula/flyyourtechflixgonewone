@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { databases } from "../AppWrite/appwriteLoginConfig";
-import { Query } from "appwrite";
+
 import { Audio } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import sampleBg from "../../img/home/home__bg2.jpg";
@@ -10,6 +10,86 @@ import Footer from "../Pages/Footer";
 
 const AllMovies = () => {
   const [movies, setMovies] = useState([]);
+
+  // filter element starts from here
+
+  const [selectedGenre, setSelectedGenre] = useState("Action/Adventure");
+  const [selectedQuality, setSelectedQuality] = useState("HD 1080");
+  const [selectedIMBd, setSelectedIMBd] = useState({ start: "", end: "" });
+  const [selectedYear, setSelectedYear] = useState({ start: "", end: "" });
+
+  // Genre list
+  const genreList = [
+    "Action/Adventure",
+    "Animals",
+    "Animation",
+    "Biography",
+    "Comedy",
+    "Cooking",
+    "Dance",
+    "Documentary",
+    "Drama",
+    "Education",
+    "Entertainment",
+    "Family",
+    "Fantasy",
+    "History",
+    "Horror",
+    "Independent",
+    "International",
+    "Kids",
+    "Kids & Family",
+    "Medical",
+    "Military/War",
+    "Music",
+    "Musical",
+    "Mystery/Crime",
+    "Nature",
+    "Paranormal",
+    "Politics",
+    "Racing",
+    "Romance",
+    "Sci-Fi/Horror",
+    "Science",
+    "Science Fiction",
+    "Science/Nature",
+    "Spanish",
+    "Travel",
+    "Western",
+  ];
+
+  // Quality list
+  const qualityList = ["HD 1080", "HD 720", "DVD", "TS"];
+
+  // Handle genre change
+  const handleGenreChange = (text) => {
+    setSelectedGenre(text);
+  };
+
+  // Handle quality change
+  const handleQualityChange = (text) => {
+    setSelectedQuality(text);
+  };
+
+  // Handle filter apply (dummy function)
+  const applyFilter = () => {
+    // You can process filter selections here, such as making API calls with selected filters
+    console.log("Filters applied: ", {
+      selectedGenre,
+      selectedQuality,
+      selectedIMBd,
+      selectedYear,
+    });
+  };
+  // State to control the size of the dropdown
+
+  const [isExpanded, setIsExpanded] = useState(false); // State to toggle dropdown size
+
+  const toggleDropdown = () => {
+    setIsExpanded(!isExpanded); // Toggle between expanded and collapsed states
+  };
+
+  // filter ends here
 
   const navigate = useNavigate();
 
@@ -149,144 +229,167 @@ const AllMovies = () => {
             <div className="col-12">
               <div className="filter__content">
                 <div className="filter__items">
-                  {/* filter item */}
+                  {/* Filter for Genre */}
                   <div className="filter__item" id="filter__genre">
                     <span className="filter__item-label">GENRE:</span>
-                    <div
-                      className="filter__item-btn dropdown-toggle"
-                      role="navigation"
-                      id="filter-genre"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
+
+                    <select
+                      value={selectedGenre}
+                      id="options"
+                      onClick={toggleDropdown}
+                      onChange={(e) => {
+                        setSelectedGenre(e.target.value);
+                      }} // Toggle dropdown size on click
+                      className={`custom-dropdown ${
+                        isExpanded ? "expanded" : ""
+                      }`}
+                      style={{
+                        width: "200px",
+                        padding: "10px",
+                        backgroundColor: "#2b2b31",
+                        color: "#fff",
+                        borderBottom: "2px solid #888",
+                        borderRadius: "5px",
+
+                        outline: "none",
+                        cursor: "pointer",
+                        appearance: "none",
+                      }}
                     >
-                      <input type="button" defaultValue="Action/Adventure" />
-                      <span />
-                    </div>
-                    <ul
-                      className="filter__item-menu dropdown-menu scrollbar-dropdown"
-                      aria-labelledby="filter-genre"
-                    >
-                      <li>Action/Adventure</li>
-                      <li>Animals</li>
-                      <li>Animation</li>
-                      <li>Biography</li>
-                      <li>Comedy</li>
-                      <li>Cooking</li>
-                      <li>Dance</li>
-                      <li>Documentary</li>
-                      <li>Drama</li>
-                      <li>Education</li>
-                      <li>Entertainment</li>
-                      <li>Family</li>
-                      <li>Fantasy</li>
-                      <li>History</li>
-                      <li>Horror</li>
-                      <li>Independent</li>
-                      <li>International</li>
-                      <li>Kids</li>
-                      <li>Kids &amp; Family</li>
-                      <li>Medical</li>
-                      <li>Military/War</li>
-                      <li>Music</li>
-                      <li>Musical</li>
-                      <li>Mystery/Crime</li>
-                      <li>Nature</li>
-                      <li>Paranormal</li>
-                      <li>Politics</li>
-                      <li>Racing</li>
-                      <li>Romance</li>
-                      <li>Sci-Fi/Horror</li>
-                      <li>Science</li>
-                      <li>Science Fiction</li>
-                      <li>Science/Nature</li>
-                      <li>Spanish</li>
-                      <li>Travel</li>
-                      <li>Western</li>
-                    </ul>
+                      {genreList.map((genre, index) => (
+                        <option
+                          key={index}
+                          value={genre}
+                          onChange={() => handleGenreChange(genre)}
+                        >
+                          {genre}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  {/* end filter item */}
-                  {/* filter item */}
+                  {/* End Filter for Genre */}
+
+                  {/* Filter for Quality */}
                   <div className="filter__item" id="filter__quality">
                     <span className="filter__item-label">QUALITY:</span>
                     <div
                       className="filter__item-btn dropdown-toggle"
                       role="navigation"
                       id="filter-quality"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
                     >
-                      <input type="button" defaultValue="HD 1080" />
+                      <input type="button" value={selectedQuality} readOnly />
                       <span />
                     </div>
                     <ul
                       className="filter__item-menu dropdown-menu scrollbar-dropdown"
                       aria-labelledby="filter-quality"
                     >
-                      <li>HD 1080</li>
-                      <li>HD 720</li>
-                      <li>DVD</li>
-                      <li>TS</li>
+                      {qualityList.map((quality, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleQualityChange(quality)}
+                        >
+                          {quality}
+                        </li>
+                      ))}
                     </ul>
                   </div>
-                  {/* end filter item */}
-                  {/* filter item */}
+                  {/* End Filter for Quality */}
+
+                  {/* Filter for IMBd */}
                   <div className="filter__item" id="filter__rate">
                     <span className="filter__item-label">IMBd:</span>
                     <div
                       className="filter__item-btn dropdown-toggle"
                       role="button"
                       id="filter-rate"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
                     >
                       <div className="filter__range">
-                        <div id="filter__imbd-start" />
-                        <div id="filter__imbd-end" />
+                        <div id="filter__imbd-start">{selectedIMBd.start}</div>
+                        <div id="filter__imbd-end">{selectedIMBd.end}</div>
                       </div>
                       <span />
                     </div>
-                    <div
-                      className="filter__item-menu filter__item-menu--range dropdown-menu"
-                      aria-labelledby="filter-rate"
-                    >
-                      <div id="filter__imbd" />
+                    <div className="filter__item-menu filter__item-menu--range dropdown-menu">
+                      {/* You can add IMBd range slider or inputs here */}
+                      <input
+                        type="number"
+                        placeholder="Start"
+                        value={selectedIMBd.start}
+                        onChange={(e) =>
+                          setSelectedIMBd({
+                            ...selectedIMBd,
+                            start: e.target.value,
+                          })
+                        }
+                      />
+                      <input
+                        type="number"
+                        placeholder="End"
+                        value={selectedIMBd.end}
+                        onChange={(e) =>
+                          setSelectedIMBd({
+                            ...selectedIMBd,
+                            end: e.target.value,
+                          })
+                        }
+                      />
                     </div>
                   </div>
-                  {/* end filter item */}
-                  {/* filter item */}
+                  {/* End Filter for IMBd */}
+
+                  {/* Filter for Year */}
                   <div className="filter__item" id="filter__year">
                     <span className="filter__item-label">RELEASE YEAR:</span>
                     <div
                       className="filter__item-btn dropdown-toggle"
                       role="button"
                       id="filter-year"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
                     >
                       <div className="filter__range">
-                        <div id="filter__years-start" />
-                        <div id="filter__years-end" />
+                        <div id="filter__years-start">{selectedYear.start}</div>
+                        <div id="filter__years-end">{selectedYear.end}</div>
                       </div>
                       <span />
                     </div>
-                    <div
-                      className="filter__item-menu filter__item-menu--range dropdown-menu"
-                      aria-labelledby="filter-year"
-                    >
-                      <div id="filter__years" />
+                    <div className="filter__item-menu filter__item-menu--range dropdown-menu">
+                      {/* Year range inputs */}
+                      <input
+                        type="number"
+                        placeholder="Start"
+                        value={selectedYear.start}
+                        onChange={(e) =>
+                          setSelectedYear({
+                            ...selectedYear,
+                            start: e.target.value,
+                          })
+                        }
+                      />
+                      <input
+                        type="number"
+                        placeholder="End"
+                        value={selectedYear.end}
+                        onChange={(e) =>
+                          setSelectedYear({
+                            ...selectedYear,
+                            end: e.target.value,
+                          })
+                        }
+                      />
                     </div>
                   </div>
-                  {/* end filter item */}
+                  {/* End Filter for Year */}
                 </div>
-                {/* filter btn */}
-                <button className="filter__btn" type="button">
-                  apply filter
+
+                {/* Filter Apply Button */}
+                <button
+                  className="filter__btn"
+                  type="button"
+                  onClick={applyFilter}
+                >
+                  Apply Filter
                 </button>
-                {/* end filter btn */}
+                {/* End Filter Apply Button */}
               </div>
             </div>
           </div>

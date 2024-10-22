@@ -1,11 +1,35 @@
+import React, { useState } from "react";
+
 import { Link, useLocation } from "react-router-dom";
 
 import MyIcon from "../Images/logo.svg";
+
 import "./Navbar.css";
 // import { useState } from "react";
 
 const Navbar = () => {
+  const [isMenuActive, setMenuActive] = useState(false);
+  const [isSearchActive, setSearchActive] = useState(false);
   const location = useLocation();
+  const toggleMenu = () => {
+    setMenuActive(!isMenuActive);
+
+    // Ensure search is deactivated if menu is activated
+    if (isSearchActive) {
+      setSearchActive(false);
+    }
+  };
+
+  const toggleSearch = () => {
+    setSearchActive(!isSearchActive);
+
+    // Ensure menu is deactivated if search is activated
+    if (isMenuActive) {
+      setMenuActive(false);
+    }
+  };
+  console.log("searchAtive", isSearchActive, "menuActive", isMenuActive);
+
   return (
     <>
       {/* Hello world */}
@@ -22,7 +46,11 @@ const Navbar = () => {
                   {/* end header logo */}
                   {/* header nav */}
 
-                  <ul className="header__nav ">
+                  <ul
+                    className={`header__nav ${
+                      isMenuActive ? "header__nav--active" : ""
+                    }`}
+                  >
                     {/* dropdown */}
                     <li className="header__nav-item">
                       <Link to="/">
@@ -74,13 +102,25 @@ const Navbar = () => {
                   {/* end header nav */}
                   {/* header auth */}
                   <div className="header__auth">
-                    <button className="header__search-btn" type="button">
+                    <button
+                      className={`header__search-btn ${
+                        isSearchActive ? "active" : ""
+                      }`}
+                      onClick={toggleSearch}
+                      type="button"
+                    >
                       <i className="icon ion-ios-search" />
                     </button>
                   </div>
                   {/* end header auth */}
                   {/* header menu btn */}
-                  <button className="header__btn" type="button">
+                  <button
+                    className={`header__btn ${
+                      isMenuActive ? "header__btn--active" : ""
+                    }`}
+                    onClick={toggleMenu}
+                    type="button"
+                  >
                     <span />
                     <span />
                     <span />
@@ -92,7 +132,12 @@ const Navbar = () => {
           </div>
         </div>
         {/* header search */}
-        <form action="#" className="header__search">
+        <form
+          action="#"
+          className={`header__search ${
+            isSearchActive ? "header__search--active" : ""
+          }`}
+        >
           <div className="container">
             <div className="row">
               <div className="col-12">

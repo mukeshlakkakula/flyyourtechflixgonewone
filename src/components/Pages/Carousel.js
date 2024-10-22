@@ -59,7 +59,7 @@ const Carousel = () => {
         process.env.REACT_APP_MOVIE_DETAILS_COLLECTION_ID,
         [
           Query.orderDesc("release_date"),
-          Query.limit(5), // Sort by release_date in descending order
+          Query.limit(6), // Sort by release_date in descending order
         ]
       );
       setMovies(response.documents);
@@ -136,7 +136,7 @@ const Carousel = () => {
                 </h3>
                 <span className="card__category">
                   {apiStatus === apiStatusConstants.success ? (
-                    each.genres.map((each) => <a>{each}</a>)
+                    each.genres.map((each, index) => <a key={index}>{each}</a>)
                   ) : (
                     <a>cast</a>
                   )}{" "}

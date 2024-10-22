@@ -11,6 +11,7 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [status, setStatus] = useState("");
   let navigate = useNavigate();
   // Admin credentials (for validation)
   // const adminEmail = "lakkakulababblu@gmail.com";
@@ -20,9 +21,11 @@ const AdminLogin = () => {
     account.get().then(
       (response) => {
         console.log("Already logged in:", response);
+        setStatus(`Already logged in:`);
       },
       (error) => {
         console.log("Not logged in", error);
+        setStatus(`Not logged in, ${error}`);
       }
     );
   }, []);
@@ -39,11 +42,13 @@ const AdminLogin = () => {
       // Log in with email and password
       await account.createEmailPasswordSession(email, password);
       console.log("Admin logged in successfully");
+      setStatus("Admin logged in successfully ");
       navigate("/admin/createmovie");
       // Redirect to admin dashboard or some other page
     } catch (err) {
       // Display specific error message from Appwrite
       setError(`Login failed: ${err.message}`);
+      setStatus(`Login failed: ${err.message}`);
       console.error(err);
     }
   };
@@ -52,9 +57,11 @@ const AdminLogin = () => {
     try {
       await account.deleteSession("current");
       console.log("Logged out successfully");
+      setStatus("Logged out successfully");
       // Redirect to login page
     } catch (err) {
       console.error("Logout failed", err);
+      setStatus(`Logout failed, ${err}`);
     }
   };
   return (
@@ -71,7 +78,7 @@ const AdminLogin = () => {
                 <a href="index.html" className="sign__logo">
                   <img src={logo} alt="Logo" />
                 </a>
-
+                <p>Login Status{status}</p>
                 <div className="sign__group">
                   <input
                     type="email"
@@ -94,7 +101,7 @@ const AdminLogin = () => {
                   />
                 </div>
 
-                {error && <p style={{ color: "red" }}>{error}</p>}
+                <p style={{ color: "red" }}>{status}</p>
 
                 <button type="submit" className="sign__btn">
                   Log in
