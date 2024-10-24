@@ -84,7 +84,10 @@ const YearRangeFilter = () => {
           {videoSources.map((source) => (
             <button
               key={source.quality}
-              onClick={() => handleQualityChange(source.src)}
+              onClick={() => {
+                handleQualityChange(source.src); // Change quality
+                setShowQualityOptions(false); // Close the dropdown
+              }}
               className={selectedQuality === source.src ? "active" : ""}
             >
               {source.quality}

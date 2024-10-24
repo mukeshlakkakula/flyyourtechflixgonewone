@@ -258,9 +258,19 @@ const MovieDetails = () => {
                   url={selectedQuality}
                   controls
                   playing={isPlaying} // Control playback with isPlaying state
-                  width="60%"
-                  height="60%"
-                  light="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg"
+                  width="100%"
+                  height="100%"
+                  light={
+                    <img
+                      src={
+                        apiStatus === apiStatusConstants.success
+                          ? movie.thumbnail_url
+                          : sampleBg
+                      }
+                      alt="Thumbnail"
+                      style={{ height: "303px", width: "100%" }}
+                    />
+                  }
                   onReady={handlePlayerReady} // Call this function when the player is ready
                   onPause={() => handlePlayPause(false)} // Update current time when paused
                   onPlay={() => handlePlayPause(true)} // Update current time when playing
@@ -280,9 +290,14 @@ const MovieDetails = () => {
                     {videoSources.map((source) => (
                       <button
                         key={source.quality}
-                        onClick={() => handleQualityChange(source.src)}
+                        onClick={() => {
+                          handleQualityChange(source.src); // Change quality
+                          setShowQualityOptions(false); // Close the dropdown
+                        }}
                         className={
-                          selectedQuality === source.src ? "active" : ""
+                          selectedQuality === source.src
+                            ? "active btnNotActive"
+                            : "btnNotActive"
                         }
                       >
                         {source.quality}

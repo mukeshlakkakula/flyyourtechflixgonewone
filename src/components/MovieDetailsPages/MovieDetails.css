@@ -8,17 +8,17 @@
 /* player styles starts from here */
 .video-player-wrapper {
   position: relative;
-  width: 100%;
   min-height: 600px;
 }
 
 .quality-icon {
   position: absolute; /* Position icon relative to the player */
-  top: 10px; /* Adjust this value as necessary */
-  left: 10px; /* Adjust this value as necessary */
+  top: 20px; /* Adjust this value as necessary */
+  left: 40px; /* Adjust this value as necessary */
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   color: white; /* Icon color */
   padding: 10px;
+  font-size: 1rem;
   border-radius: 5px;
   cursor: pointer; /* Change cursor to pointer on hover */
   z-index: 10; /* Ensure it appears above the player */
@@ -31,6 +31,7 @@
   background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
   padding: 10px;
   border-radius: 5px;
+  font-size: 1rem;
   z-index: 10; /* Ensure it appears above the player */
   display: flex;
   flex-direction: column; /* Stack buttons vertically */
@@ -50,6 +51,9 @@
   background-color: rgba(255, 255, 255, 0.2); /* Change background on hover */
 }
 
+.btnNotActive {
+  font-size: 0.7rem;
+}
 .quality-selector button.active {
   background-color: rgba(255, 255, 255, 0.3); /* Active button background */
 }
