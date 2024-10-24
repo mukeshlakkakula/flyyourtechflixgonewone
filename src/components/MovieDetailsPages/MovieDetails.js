@@ -22,7 +22,7 @@ const MovieDetails = () => {
   };
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
   console.log("apiInitial", apiStatus);
-
+  const [selectedQuality, setSelectedQuality] = useState("");
   const fetchMovieData = async () => {
     setApiStatus(apiStatusConstants.inProgress);
     try {
@@ -33,6 +33,7 @@ const MovieDetails = () => {
       );
       setMovie(response);
       setApiStatus(apiStatusConstants.success);
+      setSelectedQuality(response.qualityUrls["1080p"]);
       console.log("res", response);
     } catch (error) {
       console.error("Error fetching movie data:", error);
@@ -74,40 +75,31 @@ const MovieDetails = () => {
   }
 
   // media player starts here
+
   let videoSources = [
     {
       quality: "1080p",
-      src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4",
+      src:
+        apiStatus === apiStatusConstants.success
+          ? movie.qualityUrls["1080p"]
+          : "",
     },
     {
       quality: "720p",
-      src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4",
+      src:
+        apiStatus === apiStatusConstants.success
+          ? movie.qualityUrls["720p"]
+          : "",
     },
     {
       quality: "480p",
-      src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4",
+      src:
+        apiStatus === apiStatusConstants.success
+          ? movie.qualityUrls["480p"]
+          : "",
     },
   ];
 
-  if (apiStatus === apiStatusConstants.success) {
-    console.log("movieUrl", movie.qualityUrls);
-    videoSources = [
-      {
-        quality: "1080p",
-        src: movie.qualityUrls["1080p"],
-      },
-      {
-        quality: "720p",
-        src: movie.qualityUrls["720p"],
-      },
-      {
-        quality: "480p",
-        src: movie.qualityUrls["480p"],
-      },
-    ];
-  }
-
-  const [selectedQuality, setSelectedQuality] = useState(videoSources[0].src);
   const [showQualityOptions, setShowQualityOptions] = useState(false);
   const playerRef = useRef(null); // Ref to access the React Player instance
   const [currentTime, setCurrentTime] = useState(0); // Store the current playback time
