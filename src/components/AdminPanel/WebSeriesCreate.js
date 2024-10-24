@@ -31,7 +31,7 @@ const WebSeriesCreate = () => {
       ...webseriesSeasons,
       {
         season_id: uuidv4(),
-        season_number: webseriesSeasons.length + 1,
+        season_number: parseInt(webseriesSeasons.length + 1),
         webEpisodes: [],
       },
     ]);
