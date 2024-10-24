@@ -85,7 +85,7 @@ const NewItemMovies = () => {
               </span>
               <span className="card__rate">
                 <i className="icon ion-ios-star" />
-                8.4
+                {each.imdb_rating}
               </span>
             </div>
           </div>

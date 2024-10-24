@@ -78,7 +78,8 @@ const NewTvSeries = () => {
                 )}{" "}
               </span>
               <span className="card__rate">
-                <i className="icon ion-ios-star"></i> 8.4
+                <i className="icon ion-ios-star"></i>
+                {each.imdb_rating}
               </span>
             </div>
           </div>

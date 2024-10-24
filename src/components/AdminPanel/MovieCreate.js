@@ -26,6 +26,10 @@ const MovieCreate = () => {
     { movie_images_id: uuidv4(), image_url: "", description: "" },
   ]);
 
+  //added new attributes
+  const [imdb_rating, setImdbRating] = useState(0.0); // Double type
+  const [highest_video_quality, setHighestVideoQuality] = useState(""); // Enum values
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const movieData = {
@@ -50,6 +54,8 @@ const MovieCreate = () => {
         "1080p": movieTrailerVideo3,
       },
       movieImages: movieimages,
+      imdb_rating: parseFloat(imdb_rating), // Convert to float/double
+      highest_video_quality, // Enum value
     };
 
     try {
@@ -81,6 +87,8 @@ const MovieCreate = () => {
       setTrailerUrl("");
       setAvailabilityStatus(false);
       setGenres("");
+      setImdbRating(0.0);
+      setHighestVideoQuality("");
     } catch (error) {
       alert("Error adding movie details:", error);
       console.error("Error adding movie details:", error);
@@ -153,6 +161,36 @@ const MovieCreate = () => {
             placeholder="Director's name (e.g., Christopher Nolan)"
             required
           />
+
+          {/* New form field for IMDb Rating */}
+          <label>IMDb Rating</label>
+          <input
+            type="number"
+            step="0.1"
+            min="0"
+            max="10"
+            value={imdb_rating}
+            onChange={(e) => setImdbRating(e.target.value)}
+            placeholder="IMDb Rating (e.g., 8.5)"
+            required
+          />
+
+          {/* New form field for Highest Video Quality (Enum) */}
+          <label>Highest Video Quality</label>
+          <select
+            value={highest_video_quality}
+            className="p-1 rounded mb-1 bg-dark text-light"
+            onChange={(e) => setHighestVideoQuality(e.target.value)}
+            required
+          >
+            <option value="" disabled>
+              Select Quality
+            </option>
+            <option value="HD 1080">HD 1080</option>
+            <option value="HD 720">HD 720</option>
+            <option value="DVD">DVD</option>
+            <option value="TS">TS</option>
+          </select>
 
           <label>Cast</label>
           <input

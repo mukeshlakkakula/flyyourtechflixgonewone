@@ -86,10 +86,10 @@ const NewReleases = () => {
                   </span>
                   <div className="card__wrap">
                     <span className="card__rate">
-                      <i className="icon ion-ios-star"></i> 7.1
+                      <i className="icon ion-ios-star"></i> {each.imdb_rating}
                     </span>
                     <ul className="card__list">
-                      <li>HD</li>
+                      <li>{each.highest_video_quality}</li>
                       <li>
                         {apiStatus === apiStatusConstants.success
                           ? each.age_rating

@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
-import { Link, useLocation } from "react-router-dom";
+//importing context
+import { SearchContext } from "../../context/SearchContext";
+
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import MyIcon from "../Images/logo.svg";
 
@@ -8,6 +11,19 @@ import "./Navbar.css";
 // import { useState } from "react";
 
 const Navbar = () => {
+  // search context here
+  const { setSearchText } = useContext(SearchContext);
+  const [navSearch, setNavSearch] = useState("");
+  const sendSearchText = () => {
+    setSearchText(navSearch);
+  };
+
+  const handleSearchChange = (e) => {
+    setNavSearch(e.target.value);
+  };
+
+  //handles search here
+
   const [isMenuActive, setMenuActive] = useState(false);
   const [isSearchActive, setSearchActive] = useState(false);
   const location = useLocation();
@@ -19,10 +35,11 @@ const Navbar = () => {
       setSearchActive(false);
     }
   };
-
+  const navigate = useNavigate();
   const toggleSearch = () => {
     setSearchActive(!isSearchActive);
-
+    navigate("/movies");
+    console.log("navigat", navigate, isSearchActive);
     // Ensure menu is deactivated if search is activated
     if (isMenuActive) {
       setMenuActive(false);
@@ -144,9 +161,13 @@ const Navbar = () => {
                 <div className="header__search-content">
                   <input
                     type="text"
+                    value={navSearch}
+                    onChange={handleSearchChange}
                     placeholder="Search for a movie, TV Series that you are looking for"
                   />
-                  <button type="button">search</button>
+                  <button type="button" onClick={sendSearchText}>
+                    search
+                  </button>
                 </div>
               </div>
             </div>
