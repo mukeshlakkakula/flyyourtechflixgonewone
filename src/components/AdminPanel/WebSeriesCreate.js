@@ -20,23 +20,30 @@ const WebSeriesCreate = () => {
   const [genres, setGenres] = useState([]); // Array of strings
 
   // season details starts here
+  // season details
   const [webseriesSeasons, setWebseriesSeasons] = useState([
-    { season_id: uuidv4(), season_number: 1 },
+    { season_id: uuidv4(), season_number: 1, webEpisodes: [] },
   ]);
-  //season details ends here
 
+  // Handle adding new seasons
   const handleAddSeason = () => {
     setWebseriesSeasons([
       ...webseriesSeasons,
-      { season_id: uuidv4(), season_number: webseriesSeasons.length + 1 },
+      {
+        season_id: uuidv4(),
+        season_number: webseriesSeasons.length + 1,
+        webEpisodes: [],
+      },
     ]);
   };
 
+  // Handle removing seasons
   const handleRemoveSeason = (index) => {
     const newSeasons = webseriesSeasons.filter((_, i) => i !== index);
     setWebseriesSeasons(newSeasons);
   };
 
+  // Handle changing season data
   const handleSeasonChange = (index, event) => {
     const { name, value } = event.target;
     const newSeasons = [...webseriesSeasons];
@@ -44,8 +51,46 @@ const WebSeriesCreate = () => {
     setWebseriesSeasons(newSeasons);
   };
 
+  // Handle adding new episodes to a specific season
+  const handleAddEpisode = (seasonIndex) => {
+    const newSeasons = [...webseriesSeasons];
+    newSeasons[seasonIndex].webEpisodes.push({
+      episode_id: uuidv4(),
+      episode_title: "",
+      episode_number: parseInt(newSeasons[seasonIndex].webEpisodes.length + 1),
+      duration: 0,
+    });
+    setWebseriesSeasons(newSeasons);
+  };
+
+  // Handle removing an episode from a specific season
+  const handleRemoveEpisode = (seasonIndex, episodeIndex) => {
+    const newSeasons = [...webseriesSeasons];
+    newSeasons[seasonIndex].webEpisodes = newSeasons[
+      seasonIndex
+    ].webEpisodes.filter((_, i) => i !== episodeIndex);
+    setWebseriesSeasons(newSeasons);
+  };
+
+  // Handle changing episode data for a specific season
+  const handleEpisodeChange = (seasonIndex, episodeIndex, event) => {
+    const { name, value } = event.target;
+    const newSeasons = [...webseriesSeasons];
+    newSeasons[seasonIndex].webEpisodes[episodeIndex][name] = value;
+    setWebseriesSeasons(newSeasons);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const processedSeasons = webseriesSeasons.map((season) => ({
+      ...season,
+      webEpisodes: season.webEpisodes.map((episode) => ({
+        ...episode,
+        episode_number: parseInt(episode.episode_number, 10), // Ensure episode_number is an integer
+        duration: parseInt(episode.duration, 10), // Ensure duration is an integer
+      })),
+    }));
 
     const webseriesData = {
       webseries_title,
@@ -61,7 +106,7 @@ const WebSeriesCreate = () => {
       trailer_url,
       availability_status,
       genres,
-      webseriesSeasons: webseriesSeasons,
+      webseriesSeasons: processedSeasons,
     };
 
     try {
@@ -89,7 +134,9 @@ const WebSeriesCreate = () => {
       setTrailerUrl("");
       setAvailabilityStatus(false);
       setGenres([]);
-      setWebseriesSeasons([{ season_id: uuidv4(), season_number: 1 }]); // Reset seasons to initial state
+      setWebseriesSeasons([
+        { season_id: uuidv4(), season_number: 1, webEpisodes: [] },
+      ]); // Reset seasons to initial state
 
       // Optionally reset the form
     } catch (error) {
@@ -213,7 +260,7 @@ const WebSeriesCreate = () => {
             {/* //season input from here */}
             {/* Seasons Input */}
             <h3>Seasons</h3>
-            {webseriesSeasons.map((season, index) => (
+            {webseriesSeasons.map((season, seasonIndex) => (
               <div key={season.season_id}>
                 <input
                   type="text"
@@ -226,14 +273,73 @@ const WebSeriesCreate = () => {
                   type="number"
                   name="season_number"
                   value={season.season_number}
-                  onChange={(event) => handleSeasonChange(index, event)}
+                  onChange={(event) => handleSeasonChange(seasonIndex, event)}
                   placeholder="Season Number"
                   required
                 />
+                {/* Episodes Input */}
+                <h4>Episodes</h4>
+                {season.webEpisodes.map((episode, episodeIndex) => (
+                  <div key={episode.episode_id}>
+                    <input
+                      type="text"
+                      name="episode_id"
+                      value={episode.episode_id}
+                      readOnly
+                      placeholder="Episode ID (Unique)"
+                    />
+                    <input
+                      type="text"
+                      name="episode_title"
+                      value={episode.episode_title}
+                      onChange={(event) =>
+                        handleEpisodeChange(seasonIndex, episodeIndex, event)
+                      }
+                      placeholder="Episode Title"
+                      required
+                    />
+                    <input
+                      type="number"
+                      name="episode_number"
+                      value={episode.episode_number}
+                      onChange={(event) =>
+                        handleEpisodeChange(seasonIndex, episodeIndex, event)
+                      }
+                      placeholder="Episode Number"
+                      required
+                    />
+                    <input
+                      type="number"
+                      name="duration"
+                      value={episode.duration}
+                      onChange={(event) =>
+                        handleEpisodeChange(seasonIndex, episodeIndex, event)
+                      }
+                      placeholder="Duration (in minutes)"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="bg-danger"
+                      onClick={() =>
+                        handleRemoveEpisode(seasonIndex, episodeIndex)
+                      }
+                    >
+                      Remove Episode
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => handleAddEpisode(seasonIndex)}
+                >
+                  Add Another Episode
+                </button>
+                <hr />
                 <button
                   type="button"
                   className="bg-danger"
-                  onClick={() => handleRemoveSeason(index)}
+                  onClick={() => handleRemoveSeason(seasonIndex)}
                 >
                   Remove Season
                 </button>
@@ -242,6 +348,7 @@ const WebSeriesCreate = () => {
             <button type="button" onClick={handleAddSeason}>
               Add Another Season
             </button>
+
             {/* //season input to here */}
             <hr />
             <button type="submit">Add Web Series</button>
