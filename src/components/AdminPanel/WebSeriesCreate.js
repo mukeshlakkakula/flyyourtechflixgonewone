@@ -59,6 +59,10 @@ const WebSeriesCreate = () => {
       episode_title: "",
       episode_number: parseInt(newSeasons[seasonIndex].webEpisodes.length + 1),
       duration: 0,
+      "480p": "",
+      "720p": "",
+      "1080p": "",
+      highest_quality: "",
     });
     setWebseriesSeasons(newSeasons);
   };
@@ -317,6 +321,42 @@ const WebSeriesCreate = () => {
                       }
                       placeholder="Duration (in minutes)"
                       required
+                    />
+                    <input
+                      type="url"
+                      name="480p"
+                      value={episode["480p"]}
+                      onChange={(event) =>
+                        handleEpisodeChange(seasonIndex, episodeIndex, event)
+                      }
+                      placeholder="480p URL"
+                    />
+                    <input
+                      type="url"
+                      name="720p"
+                      value={episode["720p"]}
+                      onChange={(event) =>
+                        handleEpisodeChange(seasonIndex, episodeIndex, event)
+                      }
+                      placeholder="720p URL"
+                    />
+                    <input
+                      type="url"
+                      name="1080p"
+                      value={episode["1080p"]}
+                      onChange={(event) =>
+                        handleEpisodeChange(seasonIndex, episodeIndex, event)
+                      }
+                      placeholder="1080p URL"
+                    />
+                    <input
+                      type="text"
+                      name="highest_quality"
+                      value={episode.highest_quality}
+                      onChange={(event) =>
+                        handleEpisodeChange(seasonIndex, episodeIndex, event)
+                      }
+                      placeholder="Highest Quality"
                     />
                     <button
                       type="button"
