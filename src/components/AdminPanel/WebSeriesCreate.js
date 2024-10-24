@@ -19,6 +19,31 @@ const WebSeriesCreate = () => {
   const [availability_status, setAvailabilityStatus] = useState(false); // Boolean
   const [genres, setGenres] = useState([]); // Array of strings
 
+  // season details starts here
+  const [webseriesSeasons, setWebseriesSeasons] = useState([
+    { season_id: uuidv4(), season_number: 1 },
+  ]);
+  //season details ends here
+
+  const handleAddSeason = () => {
+    setWebseriesSeasons([
+      ...webseriesSeasons,
+      { season_id: uuidv4(), season_number: webseriesSeasons.length + 1 },
+    ]);
+  };
+
+  const handleRemoveSeason = (index) => {
+    const newSeasons = webseriesSeasons.filter((_, i) => i !== index);
+    setWebseriesSeasons(newSeasons);
+  };
+
+  const handleSeasonChange = (index, event) => {
+    const { name, value } = event.target;
+    const newSeasons = [...webseriesSeasons];
+    newSeasons[index][name] = value;
+    setWebseriesSeasons(newSeasons);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,6 +61,7 @@ const WebSeriesCreate = () => {
       trailer_url,
       availability_status,
       genres,
+      webseriesSeasons: webseriesSeasons,
     };
 
     try {
@@ -46,7 +72,25 @@ const WebSeriesCreate = () => {
         webseries_id,
         webseriesData
       );
+      alert("Web series details added successfully!");
       console.log("Web series details added successfully!");
+
+      // Reset the form fields
+      setWebseries_id(uuidv4());
+      setWebseries_title("");
+      setDescription("");
+      setDirector("");
+      setCast([]);
+      setReleaseDate("");
+      setLanguages([]);
+      setCountry("");
+      setAgeRating("");
+      setThumbnailUrl("");
+      setTrailerUrl("");
+      setAvailabilityStatus(false);
+      setGenres([]);
+      setWebseriesSeasons([{ season_id: uuidv4(), season_number: 1 }]); // Reset seasons to initial state
+
       // Optionally reset the form
     } catch (error) {
       console.error("Error adding web series details:", error);
@@ -165,6 +209,41 @@ const WebSeriesCreate = () => {
               placeholder="Genres (comma-separated)"
               required
             />
+
+            {/* //season input from here */}
+            {/* Seasons Input */}
+            <h3>Seasons</h3>
+            {webseriesSeasons.map((season, index) => (
+              <div key={season.season_id}>
+                <input
+                  type="text"
+                  name="season_id"
+                  value={season.season_id}
+                  readOnly
+                  placeholder="Season ID (Unique)"
+                />
+                <input
+                  type="number"
+                  name="season_number"
+                  value={season.season_number}
+                  onChange={(event) => handleSeasonChange(index, event)}
+                  placeholder="Season Number"
+                  required
+                />
+                <button
+                  type="button"
+                  className="bg-danger"
+                  onClick={() => handleRemoveSeason(index)}
+                >
+                  Remove Season
+                </button>
+              </div>
+            ))}
+            <button type="button" onClick={handleAddSeason}>
+              Add Another Season
+            </button>
+            {/* //season input to here */}
+            <hr />
             <button type="submit">Add Web Series</button>
           </form>
         </div>
