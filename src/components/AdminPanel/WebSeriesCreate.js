@@ -13,6 +13,7 @@ const WebSeriesCreate = () => {
   const [release_date, setReleaseDate] = useState(""); // Date/Time
   const [languages, setLanguages] = useState([]); // Array of strings
   const [country, setCountry] = useState("");
+  const [imdb_rating, setImdbRating] = useState(0.0);
   const [age_rating, setAgeRating] = useState("");
   const [thumbnail_url, setThumbnailUrl] = useState("");
   const [trailer_url, setTrailerUrl] = useState("");
@@ -22,7 +23,12 @@ const WebSeriesCreate = () => {
   // season details starts here
   // season details
   const [webseriesSeasons, setWebseriesSeasons] = useState([
-    { season_id: uuidv4(), season_number: 1, webEpisodes: [] },
+    {
+      season_id: uuidv4(),
+      season_number: 1,
+      webEpisodes: [],
+      season_imdb_rating: parseFloat(0.0),
+    },
   ]);
 
   // Handle adding new seasons
@@ -33,6 +39,7 @@ const WebSeriesCreate = () => {
         season_id: uuidv4(),
         season_number: parseInt(webseriesSeasons.length + 1),
         webEpisodes: [],
+        season_imdb_rating: parseFloat(0.0),
       },
     ]);
   };
@@ -45,12 +52,22 @@ const WebSeriesCreate = () => {
 
   // Handle changing season data
   const handleSeasonChange = (index, event) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    // Convert value to float if it's the "season_imdb_rating" field
+    if (name === "season_imdb_rating") {
+      value = parseFloat(value); // Convert string to float
+    }
+
+    // Convert value to integer if it's a number field like "season_number"
+    if (name === "season_number") {
+      value = parseInt(value, 10); // Convert string to integer
+    }
+
     const newSeasons = [...webseriesSeasons];
     newSeasons[index][name] = value;
+
     setWebseriesSeasons(newSeasons);
   };
-
   // Handle adding new episodes to a specific season
   const handleAddEpisode = (seasonIndex) => {
     const newSeasons = [...webseriesSeasons];
@@ -86,7 +103,7 @@ const WebSeriesCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("started sending data");
     const processedSeasons = webseriesSeasons.map((season) => ({
       ...season,
       webEpisodes: season.webEpisodes.map((episode) => ({
@@ -107,6 +124,7 @@ const WebSeriesCreate = () => {
       country,
       age_rating,
       thumbnail_url,
+      imdb_rating: parseFloat(imdb_rating),
       trailer_url,
       availability_status,
       genres,
@@ -136,10 +154,16 @@ const WebSeriesCreate = () => {
       setAgeRating("");
       setThumbnailUrl("");
       setTrailerUrl("");
+      setImdbRating(0.0);
       setAvailabilityStatus(false);
       setGenres([]);
       setWebseriesSeasons([
-        { season_id: uuidv4(), season_number: 1, webEpisodes: [] },
+        {
+          season_id: uuidv4(),
+          season_number: 1,
+          webEpisodes: [],
+          season_imdb_rating: parseFloat(0.0),
+        },
       ]); // Reset seasons to initial state
 
       // Optionally reset the form
@@ -169,6 +193,18 @@ const WebSeriesCreate = () => {
               placeholder="Description"
               required
             />
+            <label>IMDb Rating</label>
+            <input
+              type="number"
+              step="0.1"
+              min="0"
+              max="10"
+              value={imdb_rating}
+              onChange={(e) => setImdbRating(e.target.value)}
+              placeholder="IMDb Rating (e.g., 8.5)"
+              required
+            />
+
             <input
               type="text"
               value={director}
@@ -279,6 +315,18 @@ const WebSeriesCreate = () => {
                   value={season.season_number}
                   onChange={(event) => handleSeasonChange(seasonIndex, event)}
                   placeholder="Season Number"
+                  required
+                />
+
+                <input
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="10"
+                  name="season_imdb_rating"
+                  value={season.season_imdb_rating}
+                  onChange={(event) => handleSeasonChange(seasonIndex, event)}
+                  placeholder="IMDb Rating (e.g., 8.5)"
                   required
                 />
                 {/* Episodes Input */}
