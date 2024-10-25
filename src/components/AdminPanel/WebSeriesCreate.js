@@ -180,13 +180,15 @@ const WebSeriesCreate = () => {
         <div className="form-container">
           <h2>Add Web Series Details</h2>
           <form onSubmit={handleSubmit}>
+            <label htmlFor="webseries_title">Web Series Title</label>
             <input
               type="text"
               value={webseries_title}
               onChange={(e) => setWebseries_title(e.target.value)}
               placeholder="Web Series Title"
               required
-            />
+            />{" "}
+            <label htmlFor="description">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -203,8 +205,8 @@ const WebSeriesCreate = () => {
               onChange={(e) => setImdbRating(e.target.value)}
               placeholder="IMDb Rating (e.g., 8.5)"
               required
-            />
-
+            />{" "}
+            <label htmlFor="director">Director</label>
             <input
               type="text"
               value={director}
@@ -212,6 +214,7 @@ const WebSeriesCreate = () => {
               placeholder="Director"
               required
             />
+            <label htmlFor="cast">Cast (comma-separated)</label>
             <input
               type="text"
               value={cast.join(",")} // Display as comma-separated values
@@ -220,14 +223,18 @@ const WebSeriesCreate = () => {
               } // Convert back to array
               placeholder="Cast (comma-separated)"
               required
-            />
+            />{" "}
+            <label htmlFor="release_date">Release Date</label>
             <input
               type="datetime-local" // Input type for date and time
               value={release_date}
+              className="p-2 rounded"
               onChange={(e) => setReleaseDate(e.target.value)}
               placeholder="Release Date"
               required
-            />
+            />{" "}
+            <hr />
+            <label htmlFor="languages">Languages (comma-separated)</label>
             <input
               type="text"
               value={languages.join(",")} // Display as comma-separated values
@@ -239,6 +246,7 @@ const WebSeriesCreate = () => {
               placeholder="Languages (comma-separated)"
               required
             />
+            <label htmlFor="country">Country</label>
             <input
               type="text"
               value={country}
@@ -246,6 +254,7 @@ const WebSeriesCreate = () => {
               placeholder="Country"
               required
             />
+            <label htmlFor="age_rating">Age Rating</label>
             <input
               type="text"
               value={age_rating}
@@ -253,13 +262,15 @@ const WebSeriesCreate = () => {
               placeholder="Age Rating"
               required
             />
+            <label htmlFor="thumbnail_url">Thumbnail URL</label>
             <input
               type="url"
               value={thumbnail_url}
               onChange={(e) => setThumbnailUrl(e.target.value)}
               placeholder="Thumbnail URL"
               required
-            />
+            />{" "}
+            <label htmlFor="trailer_url">Trailer URL</label>
             <input
               type="url"
               value={trailer_url}
@@ -267,7 +278,6 @@ const WebSeriesCreate = () => {
               placeholder="Trailer URL"
               required
             />
-
             <div>
               <label className="custom-checkbox-label">
                 Availability Status
@@ -285,8 +295,8 @@ const WebSeriesCreate = () => {
                   {availability_status ? "Available" : "Not Available"}
                 </span>
               </p>
-            </div>
-
+            </div>{" "}
+            <label htmlFor="genres">Genres (comma-separated)</label>
             <input
               type="text"
               value={genres.join(",")} // Display as comma-separated values
@@ -296,12 +306,15 @@ const WebSeriesCreate = () => {
               placeholder="Genres (comma-separated)"
               required
             />
-
             {/* //season input from here */}
             {/* Seasons Input */}
-            <h3>Seasons</h3>
+            <h2>Seasons</h2>
             {webseriesSeasons.map((season, seasonIndex) => (
               <div key={season.season_id}>
+                {" "}
+                <label htmlFor={`season_id_${seasonIndex}`}>
+                  Season ID (Unique)
+                </label>
                 <input
                   type="text"
                   name="season_id"
@@ -309,6 +322,9 @@ const WebSeriesCreate = () => {
                   readOnly
                   placeholder="Season ID (Unique)"
                 />
+                <label htmlFor={`season_number_${seasonIndex}`}>
+                  Season Number
+                </label>
                 <input
                   type="number"
                   name="season_number"
@@ -317,7 +333,9 @@ const WebSeriesCreate = () => {
                   placeholder="Season Number"
                   required
                 />
-
+                <label htmlFor={`season_imdb_rating_${seasonIndex}`}>
+                  Season IMDb Rating
+                </label>
                 <input
                   type="number"
                   step="0.1"
@@ -330,9 +348,14 @@ const WebSeriesCreate = () => {
                   required
                 />
                 {/* Episodes Input */}
-                <h4>Episodes</h4>
+                <h2>Episodes</h2>
                 {season.webEpisodes.map((episode, episodeIndex) => (
                   <div key={episode.episode_id}>
+                    <label
+                      htmlFor={`episode_id_${seasonIndex}_${episodeIndex}`}
+                    >
+                      Episode ID (Unique)
+                    </label>
                     <input
                       type="text"
                       name="episode_id"
@@ -340,6 +363,11 @@ const WebSeriesCreate = () => {
                       readOnly
                       placeholder="Episode ID (Unique)"
                     />
+                    <label
+                      htmlFor={`episode_title_${seasonIndex}_${episodeIndex}`}
+                    >
+                      Episode Title
+                    </label>
                     <input
                       type="text"
                       name="episode_title"
@@ -349,7 +377,12 @@ const WebSeriesCreate = () => {
                       }
                       placeholder="Episode Title"
                       required
-                    />
+                    />{" "}
+                    <label
+                      htmlFor={`episode_number_${seasonIndex}_${episodeIndex}`}
+                    >
+                      Episode Number
+                    </label>
                     <input
                       type="number"
                       name="episode_number"
@@ -359,7 +392,10 @@ const WebSeriesCreate = () => {
                       }
                       placeholder="Episode Number"
                       required
-                    />
+                    />{" "}
+                    <label htmlFor={`duration_${seasonIndex}_${episodeIndex}`}>
+                      Duration (in minutes)
+                    </label>
                     <input
                       type="number"
                       name="duration"
@@ -369,7 +405,10 @@ const WebSeriesCreate = () => {
                       }
                       placeholder="Duration (in minutes)"
                       required
-                    />
+                    />{" "}
+                    <label htmlFor={`480p_${seasonIndex}_${episodeIndex}`}>
+                      480p URL
+                    </label>
                     <input
                       type="url"
                       name="480p"
@@ -378,7 +417,10 @@ const WebSeriesCreate = () => {
                         handleEpisodeChange(seasonIndex, episodeIndex, event)
                       }
                       placeholder="480p URL"
-                    />
+                    />{" "}
+                    <label htmlFor={`720p_${seasonIndex}_${episodeIndex}`}>
+                      720p URL
+                    </label>
                     <input
                       type="url"
                       name="720p"
@@ -387,7 +429,10 @@ const WebSeriesCreate = () => {
                         handleEpisodeChange(seasonIndex, episodeIndex, event)
                       }
                       placeholder="720p URL"
-                    />
+                    />{" "}
+                    <label htmlFor={`1080p_${seasonIndex}_${episodeIndex}`}>
+                      1080p URL
+                    </label>
                     <input
                       type="url"
                       name="1080p"
@@ -397,18 +442,28 @@ const WebSeriesCreate = () => {
                       }
                       placeholder="1080p URL"
                     />
-                    <input
-                      type="text"
+                    <label>Highest Video Quality</label>
+                    <select
                       name="highest_quality"
+                      className="p-1 rounded mb-1 bg-dark text-light"
                       value={episode.highest_quality}
                       onChange={(event) =>
                         handleEpisodeChange(seasonIndex, episodeIndex, event)
                       }
-                      placeholder="Highest Quality"
-                    />
+                      required
+                    >
+                      <option value="" disabled>
+                        Select Quality
+                      </option>
+                      <option value="HD 1080">HD 1080</option>
+                      <option value="HD 720">HD 720</option>
+                      <option value="DVD">DVD</option>
+                      <option value="TS">TS</option>
+                    </select>
+                    <br />
                     <button
                       type="button"
-                      className="bg-danger"
+                      className="bg-danger w-50  mt-1"
                       onClick={() =>
                         handleRemoveEpisode(seasonIndex, episodeIndex)
                       }
@@ -419,27 +474,36 @@ const WebSeriesCreate = () => {
                 ))}
                 <button
                   type="button"
+                  className="w-50"
                   onClick={() => handleAddEpisode(seasonIndex)}
                 >
                   Add Another Episode
                 </button>
                 <hr />
-                <button
-                  type="button"
-                  className="bg-danger"
-                  onClick={() => handleRemoveSeason(seasonIndex)}
-                >
-                  Remove Season
-                </button>
+                <div className="d-flex justify-content-end">
+                  <button
+                    type="button"
+                    className="bg-danger w-50"
+                    onClick={() => handleRemoveSeason(seasonIndex)}
+                  >
+                    Remove Season
+                  </button>
+                </div>
+                <hr />
               </div>
             ))}
-            <button type="button" onClick={handleAddSeason}>
-              Add Another Season
-            </button>
-
+            <div className="d-flex justify-content-center">
+              <button type="button" className="w-50" onClick={handleAddSeason}>
+                Add Another Season
+              </button>
+            </div>
             {/* //season input to here */}
             <hr />
-            <button type="submit">Add Web Series</button>
+            <div className="d-flex justify-content-center">
+              <button type="submit" className="w-50">
+                Add Web Series to server
+              </button>
+            </div>
           </form>
         </div>
       </div>
