@@ -8,7 +8,6 @@
 /* player styles starts from here */
 .video-player-wrapper {
   position: relative;
-  min-height: 600px;
 }
 
 .quality-icon {

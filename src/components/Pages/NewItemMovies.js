@@ -27,11 +27,7 @@ const NewItemMovies = () => {
     try {
       const response = await databases.listDocuments(
         process.env.REACT_APP_DATABASE_ID,
-        process.env.REACT_APP_MOVIE_DETAILS_COLLECTION_ID,
-        [
-          Query.orderDesc("release_date"),
-          Query.limit(6), // Sort by release_date in descending order
-        ]
+        process.env.REACT_APP_MOVIE_DETAILS_COLLECTION_ID
       );
       setMovies(response.documents);
       setApiStatus(apiStatusConstants.success);

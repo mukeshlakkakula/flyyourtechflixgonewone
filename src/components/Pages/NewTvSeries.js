@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { databases } from "../AppWrite/appwriteLoginConfig";
 import { Query } from "appwrite";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import sampleBg from "../../img/home/home__bg2.jpg";
 
 const NewTvSeries = () => {
@@ -23,10 +23,10 @@ const NewTvSeries = () => {
     try {
       const response = await databases.listDocuments(
         process.env.REACT_APP_DATABASE_ID,
-        process.env.REACT_APP_MOVIE_DETAILS_COLLECTION_ID,
+        process.env.REACT_APP_WEBSERIES_COLLECTION_ID,
         [
           Query.orderDesc("release_date"),
-          Query.limit(6), // Sort by release_date in descending order
+          // Sort by release_date in descending order
         ]
       );
       setMovies(response.documents);
@@ -46,8 +46,8 @@ const NewTvSeries = () => {
   return (
     <div className="d-flex flex-wrap">
       {movies.map((each, index) => (
-        <a
-          href={`/moviedetails/${each.movie_id}`}
+        <Link
+          to={`/webseriesdetails/${each.webseries_id}`}
           className="col-6 col-sm-4 col-lg-3 col-xl-2"
           key={index}
         >
@@ -67,7 +67,11 @@ const NewTvSeries = () => {
             </div>
             <div className="card__content">
               <h3 className="card__title">
-                <a href="#">{each.movie_title}</a>
+                <a href="#">
+                  {apiStatus === apiStatusConstants.success
+                    ? each.webseries_title
+                    : sampleBg}
+                </a>
               </h3>
               <span className="card__category">
                 {" "}
@@ -79,11 +83,13 @@ const NewTvSeries = () => {
               </span>
               <span className="card__rate">
                 <i className="icon ion-ios-star"></i>
-                {each.imdb_rating}
+                {apiStatus === apiStatusConstants.success
+                  ? each.imdb_rating
+                  : sampleBg}
               </span>
             </div>
           </div>
-        </a>
+        </Link>
       ))}
     </div>
   );

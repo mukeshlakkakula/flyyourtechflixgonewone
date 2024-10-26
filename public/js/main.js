@@ -145,17 +145,17 @@ $(document).ready(function () {
   /*==============================
 	Scroll bar
 	==============================*/
-  $(".scrollbar-dropdown").mCustomScrollbar({
-    axis: "y",
-    scrollbarPosition: "outside",
-    theme: "custom-bar",
-  });
+  // $(".scrollbar-dropdown").mCustomScrollbar({
+  //   axis: "y",
+  //   scrollbarPosition: "outside",
+  //   theme: "custom-bar",
+  // });
 
-  $(".accordion").mCustomScrollbar({
-    axis: "y",
-    scrollbarPosition: "outside",
-    theme: "custom-bar2",
-  });
+  // $(".accordion").mCustomScrollbar({
+  //   axis: "y",
+  //   scrollbarPosition: "outside",
+  //   theme: "custom-bar2",
+  // });
 
   /*==============================
 	Morelines

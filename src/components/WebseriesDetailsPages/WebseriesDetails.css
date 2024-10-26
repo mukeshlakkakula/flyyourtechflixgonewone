@@ -1,0 +1,18 @@
+.card__description--details {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.your-element {
+  overflow: auto;
+  scrollbar-width: 2px; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  height: 180px;
+}
+
+.your-element::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
