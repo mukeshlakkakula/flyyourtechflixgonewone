@@ -78,18 +78,6 @@ const Home = () => {
                       TV SERIES
                     </a>
                   </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      data-toggle="tab"
-                      href="#tab-4"
-                      role="tab"
-                      aria-controls="tab-4"
-                      aria-selected="false"
-                    >
-                      CARTOONS
-                    </a>
-                  </li>
                 </ul>
                 {/* end content tabs nav */}
                 {/* content mobile tabs nav */}
@@ -149,19 +137,6 @@ const Home = () => {
                           TV SERIES
                         </a>
                       </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          id="4-tab"
-                          data-toggle="tab"
-                          href="#tab-4"
-                          role="tab"
-                          aria-controls="tab-4"
-                          aria-selected="false"
-                        >
-                          CARTOONS
-                        </a>
-                      </li>
                     </ul>
                   </div>
                 </div>
@@ -212,30 +187,7 @@ const Home = () => {
 
                 {/* end card */}
                 {/* card */}
-                <div className="col-6 col-sm-4 col-lg-3 col-xl-2">
-                  <div className="card">
-                    <div className="card__cover">
-                      <img src="img/covers/cover3.jpg" alt="" />
-                      <a href="#" className="card__play">
-                        <i className="icon ion-ios-play" />
-                      </a>
-                    </div>
-                    <div className="card__content">
-                      <h3 className="card__title">
-                        <a href="#">Whitney</a>
-                      </h3>
-                      <span className="card__category">
-                        <a href="#">Romance</a>
-                        <a href="#">Drama</a>
-                        <a href="#">Music</a>
-                      </span>
-                      <span className="card__rate">
-                        <i className="icon ion-ios-star" />
-                        6.3
-                      </span>
-                    </div>
-                  </div>
-                </div>
+
                 {/* end card */}
                 {/* card */}
 

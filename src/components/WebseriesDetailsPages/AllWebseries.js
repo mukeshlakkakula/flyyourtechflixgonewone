@@ -43,53 +43,60 @@ const AllWebseries = () => {
     console.log("newrelease", movies[1], apiStatus, movies);
   }
   return (
-    <div className="d-flex flex-wrap">
-      {movies.map((each, index) => (
-        <Link
-          to={`/webseriesdetails/${each.webseries_id}`}
-          className="col-6 col-sm-4 col-lg-3 col-xl-2"
-          key={index}
-        >
-          <div className="card p-0">
-            <div className="card__cover">
-              <img
-                src={
-                  apiStatus === apiStatusConstants.success
-                    ? each.thumbnail_url
-                    : sampleBg
-                }
-                alt=""
-              />
-              <a href="#" className="card__play">
-                <i className="icon ion-ios-play"></i>
-              </a>
-            </div>
-            <div className="card__content">
-              <h3 className="card__title">
-                <a href="#">
-                  {apiStatus === apiStatusConstants.success
-                    ? each.webseries_title
-                    : sampleBg}
-                </a>
-              </h3>
-              <span className="card__category">
-                {" "}
-                {apiStatus === apiStatusConstants.success ? (
-                  each.genres.map((each, index) => <a key={index}>{each}</a>)
-                ) : (
-                  <a>cast</a>
-                )}{" "}
-              </span>
-              <span className="card__rate">
-                <i className="icon ion-ios-star"></i>
-                {apiStatus === apiStatusConstants.success
-                  ? each.imdb_rating
-                  : sampleBg}
-              </span>
-            </div>
-          </div>
-        </Link>
-      ))}
+    <div className="container">
+      <div className="row">
+        <h4 className="text-light p-3">All Web series</h4>
+        <div className="d-flex flex-wrap">
+          {movies.map((each, index) => (
+            <Link
+              to={`/webseriesdetails/${each.webseries_id}`}
+              className="col-6 col-sm-4 col-lg-3 col-xl-2"
+              key={index}
+            >
+              <div className="card p-0">
+                <div className="card__cover">
+                  <img
+                    src={
+                      apiStatus === apiStatusConstants.success
+                        ? each.thumbnail_url
+                        : sampleBg
+                    }
+                    alt=""
+                  />
+                  <a href="#" className="card__play">
+                    <i className="icon ion-ios-play"></i>
+                  </a>
+                </div>
+                <div className="card__content">
+                  <h3 className="card__title">
+                    <a href="#">
+                      {apiStatus === apiStatusConstants.success
+                        ? each.webseries_title
+                        : sampleBg}
+                    </a>
+                  </h3>
+                  <span className="card__category">
+                    {" "}
+                    {apiStatus === apiStatusConstants.success ? (
+                      each.genres.map((each, index) => (
+                        <a key={index}>{each}</a>
+                      ))
+                    ) : (
+                      <a>cast</a>
+                    )}{" "}
+                  </span>
+                  <span className="card__rate">
+                    <i className="icon ion-ios-star"></i>
+                    {apiStatus === apiStatusConstants.success
+                      ? each.imdb_rating
+                      : sampleBg}
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

@@ -603,7 +603,7 @@ const AllMovies = () => {
       {/* end catalog */}
       {/* expected premiere */}
       <hr className="text-light" />
-      <h4 className="text-light p-3">All Web series</h4>
+
       <AllWebseries />
       {/* end expected premiere */}
       {/* footer */}
