@@ -19,6 +19,7 @@ import AllWebseries from "../WebseriesDetailsPages/AllWebseries";
 
 const AllMovies = () => {
   const [movies, setMovies] = useState([]);
+
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to top
   }, []);
@@ -31,6 +32,7 @@ const AllMovies = () => {
 
   // Genre list
   const genreList = [
+    "ALL",
     "Action",
     "Adventure",
     "Animals",
@@ -75,7 +77,7 @@ const AllMovies = () => {
   ];
 
   // Quality list
-  const qualityList = ["HD 1080", "HD 720", "DVD", "TS"];
+  const qualityList = ["HD 1080", "HD 720", "DVD", "TS", "ALL"];
 
   // Handle genre change
 
@@ -245,26 +247,28 @@ const AllMovies = () => {
 
   // filtered movies starts here
   let filteredMovies = [];
-
+  let matchesTitle;
   if (apiStatus === apiStatusConstants.success) {
-    filteredMovies = movies.filter((each) => {
-      // Ensure that the movie title and searchText are not null or undefined
-      const matchesTitle = each.movie_title
-        ?.toLowerCase()
-        .includes(searchText?.toLowerCase() || "");
+    matchesTitle = movies.filter((each) =>
+      each.movie_title.toLowerCase().includes(searchText.toLowerCase())
+    );
+    console.log("matchTitle", matchesTitle);
 
-      console.log(
-        "matchesTitle",
-        matchesTitle,
-        "movie_title",
-        each.movie_title,
-        "searchText",
-        searchText
-      );
+    filteredMovies = matchesTitle.filter((each) => {
+      // Ensure that the movie title and searchText are not null or undefined
+
+      // console.log(
+      //   "matchesTitle",
+      //   matchesTitle,
+      //   "movie_title",
+      //   each.movie_title,
+      //   "searchText",
+      //   searchText
+      // );
 
       // Check if the selectedGenre exists in the genres array
       const matchesGenre =
-        selectedGenre !== ""
+        selectedGenre !== "" && selectedGenre !== "ALL"
           ? each.genres?.some(
               (genre) => genre?.toLowerCase() === selectedGenre?.toLowerCase()
             )
@@ -282,7 +286,7 @@ const AllMovies = () => {
 
       // Ensure selectedQuality and highest_video_quality are not undefined
       const matchQuality =
-        selectedQuality !== ""
+        selectedQuality !== "" && selectedQuality !== "ALL"
           ? each.highest_video_quality?.toLowerCase() ===
             selectedQuality?.toLowerCase()
           : true;
@@ -308,29 +312,15 @@ const AllMovies = () => {
       const yearMovie = dateObj.getFullYear();
       const matchYears = yearMovie >= startValue && yearMovie <= endValue;
 
-      return (
-        matchesTitle && matchesGenre && matchQuality && matchImdb && matchYears
-      );
+      return matchQuality && matchImdb && matchYears && matchesGenre;
     });
   }
-
-  let searchFilter = [];
-  if (apiStatus === apiStatusConstants.success) {
-    searchFilter = movies.filter((each) => {
-      // Ensure that the movie title and searchText are not null or undefined
-      each.movie_title.toLowerCase().includes(searchText?.toLowerCase());
-    });
-
-    console.log("searchFilter", searchFilter);
-  }
-
-  console.log("letFilter", filteredMovies);
 
   let resultView = "";
   switch (apiStatus) {
     case apiStatusConstants.success:
       resultView =
-        filteredMovies.length > 1 ? (
+        filteredMovies.length >= 1 ? (
           filteredMovies.map((each, index) => (
             <div
               className="col-6 col-sm-4 col-lg-3 col-xl-2"
@@ -527,7 +517,6 @@ const AllMovies = () => {
                         className="filter__item-menu filter__item-menu--range dropdown-menu"
                         aria-labelledby="filter-year"
                       >
-                        <div id="filter__years" />
                         <div id="filter__years" ref={imdbSliderRef}>
                           <div>
                             <span id="filter__years-start">{imdbStartVal}</span>{" "}
