@@ -19,6 +19,9 @@ import "../MovieDetailsPages/MovieDetails.css";
 const WebseriesDetails = () => {
   const { wId } = useParams();
   const [movie, setMovie] = useState(null);
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top
+  }, []);
 
   const [activeSeason, setActiveSeason] = useState("");
   const [activeEpisode, setActiveEpisode] = useState("");

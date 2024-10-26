@@ -137,7 +137,9 @@ const MovieDetails = () => {
   };
 
   //media player ends here
-
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top
+  }, []);
   return (
     <div>
       <Navbar />

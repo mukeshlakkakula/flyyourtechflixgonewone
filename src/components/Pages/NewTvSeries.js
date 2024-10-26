@@ -7,9 +7,7 @@ import sampleBg from "../../img/home/home__bg2.jpg";
 const NewTvSeries = () => {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
-  const handleMovieClick = (movie_id) => {
-    navigate(`/moviedetails/${movie_id}`); // Navigate to the movie details view
-  };
+
   const apiStatusConstants = {
     initial: "INITAIL",
     success: "SUCCESS",
@@ -26,6 +24,7 @@ const NewTvSeries = () => {
         process.env.REACT_APP_WEBSERIES_COLLECTION_ID,
         [
           Query.orderDesc("release_date"),
+          Query.limit(16),
           // Sort by release_date in descending order
         ]
       );

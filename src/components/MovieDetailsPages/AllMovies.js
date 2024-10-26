@@ -13,12 +13,15 @@ import { Audio } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import sampleBg from "../../img/home/home__bg2.jpg";
 import Navbar from "../Pages/navbar";
-import ExpectedPremier from "../Pages/ExpectedPremier";
+// import ExpectedPremier from "../Pages/ExpectedPremier";
 import Footer from "../Pages/Footer";
+import AllWebseries from "../WebseriesDetailsPages/AllWebseries";
 
 const AllMovies = () => {
   const [movies, setMovies] = useState([]);
-
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top
+  }, []);
   //search Context here
   const { searchText } = useContext(SearchContext);
   // filter element starts from here
@@ -592,39 +595,16 @@ const AllMovies = () => {
 
             {/* end card */}
             {/* paginator */}
-            <div className="col-12">
-              <ul className="paginator">
-                <li className="paginator__item paginator__item--prev">
-                  <a href="#">
-                    <i className="icon ion-ios-arrow-back" />
-                  </a>
-                </li>
-                <li className="paginator__item">
-                  <a href="#">1</a>
-                </li>
-                <li className="paginator__item paginator__item--active">
-                  <a href="#">2</a>
-                </li>
-                <li className="paginator__item">
-                  <a href="#">3</a>
-                </li>
-                <li className="paginator__item">
-                  <a href="#">4</a>
-                </li>
-                <li className="paginator__item paginator__item--next">
-                  <a href="#">
-                    <i className="icon ion-ios-arrow-forward" />
-                  </a>
-                </li>
-              </ul>
-            </div>
+
             {/* end paginator */}
           </div>
         </div>
       </div>
       {/* end catalog */}
       {/* expected premiere */}
-      <ExpectedPremier />
+      <hr className="text-light" />
+      <h4 className="text-light p-3">All Web series</h4>
+      <AllWebseries />
       {/* end expected premiere */}
       {/* footer */}
 
