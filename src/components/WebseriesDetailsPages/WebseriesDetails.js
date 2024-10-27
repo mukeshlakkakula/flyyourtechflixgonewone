@@ -81,7 +81,10 @@ const WebseriesDetails = () => {
 
     case apiStatusConstants.inProgress:
       resultView = (
-        <div className="loaderContainer p-5 m-auto w-100">
+        <div
+          className="loaderContainer p-5 m-auto w-100 "
+          style={{ height: "100vh" }}
+        >
           <Audio color="white" />
         </div>
       );
@@ -122,7 +125,7 @@ const WebseriesDetails = () => {
       quality: "1080p",
       src:
         apiStatus === apiStatusConstants.success
-          ? activeEpisode["480p"]
+          ? activeEpisode["1080p"]
           : "https://www.youtube.com/watch?v=AAq06bS8UZM&list=RDMMAAq06bS8UZM&start_radio=1",
     },
     {
@@ -136,7 +139,7 @@ const WebseriesDetails = () => {
       quality: "480p",
       src:
         apiStatus === apiStatusConstants.success
-          ? activeEpisode["1080p"]
+          ? activeEpisode["480p"]
           : "https://www.youtube.com/watch?v=AAq06bS8UZM&list=RDMMAAq06bS8UZM&start_radio=1",
     },
   ];
@@ -266,246 +269,258 @@ const WebseriesDetails = () => {
       <Navbar />
 
       {/* section Starts from Here */}
-      <section className="section details">
-        {/* details background */}
-        <div className="details__bg mvbg" data-bg={sampleBg} />
-        {/* end details background */}
-        {/* details content */}
-        <div className="container">
-          <div className="row">
-            {/* title */}
-            <div className="col-12">
-              <h1 className="details__title">
-                {apiStatus === apiStatusConstants.success
-                  ? movie.webseries_title
-                  : "Web Series title"}
-              </h1>
-            </div>
-            {/* end title */}
-            {/* content */}
-            <div className="col-10">
-              <div className="card card--details card--series">
-                <div className="row">
-                  {/* card cover */}
-                  <div className="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
-                    <div className="card__cover">
-                      <img
-                        src={
-                          apiStatus === apiStatusConstants.success
-                            ? movie.thumbnail_url
-                            : sampleBg
-                        }
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  {/* end card cover */}
-                  {/* card content */}
-                  <div className="col-12 col-sm-8 col-md-8 col-lg-9 col-xl-9">
-                    <div className="card__content">
-                      <div className="card__wrap">
-                        <span className="card__rate">
-                          <i className="icon ion-ios-star" />
-                          {apiStatus === apiStatusConstants.success
-                            ? movie.imdb_rating
-                            : "IMDb rating"}
-                        </span>
-                        <ul className="card__list">
-                          <li>
-                            {apiStatus === apiStatusConstants.success
-                              ? movie.webseriesSeasons[0].webEpisodes[0]
-                                  .highest_quality
-                              : "IMDb rating"}
-                          </li>
-                          <li>
-                            {apiStatus === apiStatusConstants.success
-                              ? movie.age_rating
-                              : sampleBg}
-                          </li>
-                        </ul>
-                      </div>
-                      <ul className="card__meta">
-                        <li>
-                          <span>Genre:</span>{" "}
-                          {apiStatus === apiStatusConstants.success ? (
-                            movie.genres.map((each, index) => (
-                              <a key={index}>{each}</a>
-                            ))
-                          ) : (
-                            <a>genres</a>
-                          )}{" "}
-                        </li>
-                        <li>
-                          <span>Release year:</span> {year}
-                        </li>
-                        <li>
-                          <span>Running time:</span>{" "}
-                          {apiStatus === apiStatusConstants.success
-                            ? movie.webseriesSeasons.length
-                            : "duration"}{" "}
-                          Seasons
-                        </li>
-                        <li>
-                          <span>Country:</span>{" "}
-                          <a href="#">
-                            {apiStatus === apiStatusConstants.success
-                              ? movie.country
-                              : "Country"}
-                          </a>{" "}
-                        </li>
-                      </ul>
-                      <div className="card__description card__description--details">
-                        <div className="card__description card__description--details your-element ">
-                          {apiStatus === apiStatusConstants.success
-                            ? movie.description
-                            : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."}
+      {apiStatus === apiStatusConstants.success ? (
+        <>
+          <section className="section details">
+            {/* details background */}
+            <div className="details__bg mvbg" data-bg={sampleBg} />
+            {/* end details background */}
+            {/* details content */}
+            <div className="container">
+              <div className="row">
+                {/* title */}
+                <div className="col-12">
+                  <h1 className="details__title">
+                    {apiStatus === apiStatusConstants.success
+                      ? movie.webseries_title
+                      : "Web Series title"}
+                  </h1>
+                </div>
+                {/* end title */}
+                {/* content */}
+                <div className="col-10">
+                  <div className="card card--details card--series">
+                    <div className="row">
+                      {/* card cover */}
+                      <div className="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                        <div className="card__cover">
+                          <img
+                            src={
+                              apiStatus === apiStatusConstants.success
+                                ? movie.thumbnail_url
+                                : sampleBg
+                            }
+                            alt=""
+                          />
                         </div>
                       </div>
+                      {/* end card cover */}
+                      {/* card content */}
+                      <div className="col-12 col-sm-8 col-md-8 col-lg-9 col-xl-9">
+                        <div className="card__content">
+                          <div className="card__wrap">
+                            <span className="card__rate">
+                              <i className="icon ion-ios-star" />
+                              {apiStatus === apiStatusConstants.success
+                                ? movie.imdb_rating
+                                : "IMDb rating"}
+                            </span>
+                            <ul className="card__list">
+                              <li>
+                                {apiStatus === apiStatusConstants.success
+                                  ? movie.webseriesSeasons[0].webEpisodes[0]
+                                      .highest_quality
+                                  : "IMDb rating"}
+                              </li>
+                              <li>
+                                {apiStatus === apiStatusConstants.success
+                                  ? movie.age_rating
+                                  : sampleBg}
+                              </li>
+                            </ul>
+                          </div>
+                          <ul className="card__meta">
+                            <li>
+                              <span>Genre:</span>{" "}
+                              {apiStatus === apiStatusConstants.success ? (
+                                movie.genres.map((each, index) => (
+                                  <a key={index}>{each}</a>
+                                ))
+                              ) : (
+                                <a>genres</a>
+                              )}{" "}
+                            </li>
+                            <li>
+                              <span>Release year:</span> {year}
+                            </li>
+                            <li>
+                              <span>Running time:</span>{" "}
+                              {apiStatus === apiStatusConstants.success
+                                ? movie.webseriesSeasons.length
+                                : "duration"}{" "}
+                              Seasons
+                            </li>
+                            <li>
+                              <span>Country:</span>{" "}
+                              <a href="#">
+                                {apiStatus === apiStatusConstants.success
+                                  ? movie.country
+                                  : "Country"}
+                              </a>{" "}
+                            </li>
+                          </ul>
+                          <div className="card__description card__description--details">
+                            <div className="card__description card__description--details your-element ">
+                              {apiStatus === apiStatusConstants.success
+                                ? movie.description
+                                : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {/* end card content */}
                     </div>
                   </div>
-                  {/* end card content */}
                 </div>
-              </div>
-            </div>
-            {/* end content */}
-            <h4 className="text-light">
-              season{" "}
-              <span style={{ color: "#ff9dcb", fontWeight: "bold" }}>
-                {activeSeason.season_number}{" "}
-              </span>
-              Episode
-              <span style={{ color: "#ff9dcb", fontWeight: "bold" }}>
-                {activeEpisode.episode_number} , {activeEpisode.episode_title}
-              </span>
-            </h4>{" "}
-            {/* player */}
-            <div className="col-12 col-xl-6">
-              <div className="video-player-wrapper">
-                <ReactPlayer
-                  ref={playerRef} // Assign ref to React Player
-                  url={selectedQuality}
-                  controls
-                  playing={isPlaying} // Control playback with isPlaying state
-                  width="100%"
-                  height={playerHeight}
-                  light={
-                    <img
-                      src={
-                        apiStatus === apiStatusConstants.success
-                          ? movie.thumbnail_url
-                          : sampleBg
+                {/* end content */}
+                <h4 className="text-light">
+                  season{" "}
+                  <span style={{ color: "#ff9dcb", fontWeight: "bold" }}>
+                    {activeSeason.season_number}{" "}
+                  </span>
+                  Episode
+                  <span style={{ color: "#ff9dcb", fontWeight: "bold" }}>
+                    {activeEpisode.episode_number} ,{" "}
+                    {activeEpisode.episode_title}
+                  </span>
+                </h4>{" "}
+                {/* player */}
+                <div className="col-12 col-xl-6">
+                  <div className="video-player-wrapper">
+                    <ReactPlayer
+                      ref={playerRef} // Assign ref to React Player
+                      url={selectedQuality}
+                      controls
+                      playing={isPlaying} // Control playback with isPlaying state
+                      width="100%"
+                      height={playerHeight}
+                      light={
+                        <img
+                          src={
+                            apiStatus === apiStatusConstants.success
+                              ? movie.thumbnail_url
+                              : sampleBg
+                          }
+                          alt="Thumbnail"
+                          style={{ height: playerHeight, width: "100%" }}
+                        />
                       }
-                      alt="Thumbnail"
-                      style={{ height: playerHeight, width: "100%" }}
+                      onReady={handlePlayerReady} // Call this function when the player is ready
+                      onPause={() => handlePlayPause(false)} // Update current time when paused
+                      onPlay={() => handlePlayPause(true)} // Update current time when playing
+                      onSeek={(time) => setCurrentTime(time)} // Update current time when seeking
                     />
-                  }
-                  onReady={handlePlayerReady} // Call this function when the player is ready
-                  onPause={() => handlePlayPause(false)} // Update current time when paused
-                  onPlay={() => handlePlayPause(true)} // Update current time when playing
-                  onSeek={(time) => setCurrentTime(time)} // Update current time when seeking
-                />
 
-                {/* Quality Selector Icon */}
-                <div
-                  className="quality-icon"
-                  onClick={() => setShowQualityOptions((prev) => !prev)}
-                >
-                  Q
-                </div>
+                    {/* Quality Selector Icon */}
+                    <div
+                      className="quality-icon"
+                      onClick={() => setShowQualityOptions((prev) => !prev)}
+                    >
+                      Q
+                    </div>
 
-                {showQualityOptions && (
-                  <div className="quality-selector">
-                    {videoSources.map((source) => (
-                      <button
-                        key={source.quality}
-                        onClick={() => {
-                          handleQualityChange(source.src); // Change quality
-                          setShowQualityOptions(false); // Close the dropdown
-                        }}
-                        className={
-                          selectedQuality === source.src
-                            ? "active btnNotActive"
-                            : "btnNotActive"
-                        }
-                      >
-                        {source.quality}
-                      </button>
-                    ))}
+                    {showQualityOptions && (
+                      <div className="quality-selector">
+                        {videoSources.map((source) => (
+                          <button
+                            key={source.quality}
+                            onClick={() => {
+                              handleQualityChange(source.src); // Change quality
+                              setShowQualityOptions(false); // Close the dropdown
+                            }}
+                            className={
+                              selectedQuality === source.src
+                                ? "active btnNotActive"
+                                : "btnNotActive"
+                            }
+                          >
+                            {source.quality}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
-            {/* end player */}
-            {/* accordion */}
-            <div className="col-12 col-xl-6 scrollbar-dropdown">
-              <div className="accordion " id="accordion">
-                <div className="accordion__card"> {mapSeasons}</div>
-              </div>
-            </div>
-            {/* end accordion */}
-            <div className="col-12">
-              <div className="details__wrap">
-                {/* availables */}
-                <div className="details__devices">
-                  <span className="details__devices-title">
-                    Available on devices:
-                  </span>
-                  <ul className="details__devices-list">
-                    <li>
-                      <i className="icon ion-logo-apple" />
-                      <span>IOS</span>
-                    </li>
-                    <li>
-                      <i className="icon ion-logo-android" />
-                      <span>Android</span>
-                    </li>
-                    <li>
-                      <i className="icon ion-logo-windows" />
-                      <span>Windows</span>
-                    </li>
-                    <li>
-                      <i className="icon ion-md-tv" />
-                      <span>Smart TV</span>
-                    </li>
-                  </ul>
                 </div>
-                {/* end availables */}
-                {/* share */}
-                <div className="details__share">
-                  <span className="details__share-title">
-                    Share with friends:
-                  </span>
-                  <ul className="details__share-list">
-                    <li className="facebook">
-                      <a href="#">
-                        <i className="icon ion-logo-facebook" />
-                      </a>
-                    </li>
-                    <li className="instagram">
-                      <a href="#">
-                        <i className="icon ion-logo-instagram" />
-                      </a>
-                    </li>
-                    <li className="twitter">
-                      <a href="#">
-                        <i className="icon ion-logo-twitter" />
-                      </a>
-                    </li>
-                    <li className="vk">
-                      <a href="#">
-                        <i className="icon ion-logo-vk" />
-                      </a>
-                    </li>
-                  </ul>
+                {/* end player */}
+                {/* accordion */}
+                <div className="col-12 col-xl-6 scrollbar-dropdown">
+                  <div className="accordion " id="accordion">
+                    <div className="accordion__card"> {mapSeasons}</div>
+                  </div>
                 </div>
-                {/* end share */}
+                {/* end accordion */}
+                <div className="col-12">
+                  <div className="details__wrap">
+                    {/* availables */}
+                    <div className="details__devices">
+                      <span className="details__devices-title">
+                        Available on devices:
+                      </span>
+                      <ul className="details__devices-list">
+                        <li>
+                          <i className="icon ion-logo-apple" />
+                          <span>IOS</span>
+                        </li>
+                        <li>
+                          <i className="icon ion-logo-android" />
+                          <span>Android</span>
+                        </li>
+                        <li>
+                          <i className="icon ion-logo-windows" />
+                          <span>Windows</span>
+                        </li>
+                        <li>
+                          <i className="icon ion-md-tv" />
+                          <span>Smart TV</span>
+                        </li>
+                      </ul>
+                    </div>
+                    {/* end availables */}
+                    {/* share */}
+                    <div className="details__share">
+                      <span className="details__share-title">
+                        Share with friends:
+                      </span>
+                      <ul className="details__share-list">
+                        <li className="facebook">
+                          <a href="#">
+                            <i className="icon ion-logo-facebook" />
+                          </a>
+                        </li>
+                        <li className="instagram">
+                          <a href="#">
+                            <i className="icon ion-logo-instagram" />
+                          </a>
+                        </li>
+                        <li className="twitter">
+                          <a href="#">
+                            <i className="icon ion-logo-twitter" />
+                          </a>
+                        </li>
+                        <li className="vk">
+                          <a href="#">
+                            <i className="icon ion-logo-vk" />
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    {/* end share */}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+            {/* end details content */}
+          </section>
+          <Footer />
+        </>
+      ) : (
+        <div
+          className="loaderContainer p-5 m-auto w-100 "
+          style={{ height: "100vh" }}
+        >
+          <Audio color="white" />
         </div>
-        {/* end details content */}
-      </section>
-      <Footer />
+      )}
 
       {/* section Ends Here */}
     </div>

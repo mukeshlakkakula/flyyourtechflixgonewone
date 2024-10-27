@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { databases } from "../AppWrite/appwriteLoginConfig";
 import { Query } from "appwrite";
+import { Audio } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import sampleBg from "../../img/home/home__bg2.jpg";
+import Navbar from "../Pages/navbar";
 
 const AllWebseries = () => {
   const [movies, setMovies] = useState([]);
@@ -48,70 +50,79 @@ const AllWebseries = () => {
     console.log("newrelease", movies[1], apiStatus, movies);
   }
   return (
-    <div className="container">
-      <div className="row">
-        <h4 className="text-light ">All Web series</h4>
-        <div className="d-flex justify-content-start align-items-center ">
-          <input
-            type="search"
-            className="p-2 rounded text-light w-75 mb-2 bg-transparent border border-light"
-            placeholder="search with webseries title"
-            onChange={(e) => setSearchedVal(e.target.value)}
-          />
-        </div>
-        <hr className="text-light" />
-        <div className="d-flex flex-wrap">
-          {filterWebSeries.map((each, index) => (
-            <Link
-              to={`/webseriesdetails/${each.webseries_id}`}
-              className="col-6 col-sm-4 col-lg-3 col-xl-2"
-              key={index}
-            >
-              <div className="card p-0">
-                <div className="card__cover">
-                  <img
-                    src={
-                      apiStatus === apiStatusConstants.success
-                        ? each.thumbnail_url
-                        : sampleBg
-                    }
-                    alt=""
-                  />
-                  <a href="#" className="card__play">
-                    <i className="icon ion-ios-play"></i>
-                  </a>
-                </div>
-                <div className="card__content">
-                  <h3 className="card__title">
-                    <a href="#">
-                      {apiStatus === apiStatusConstants.success
-                        ? each.webseries_title
-                        : sampleBg}
-                    </a>
-                  </h3>
-                  <span className="card__category">
-                    {" "}
-                    {apiStatus === apiStatusConstants.success ? (
-                      each.genres.map((each, index) => (
-                        <a key={index}>{each}</a>
-                      ))
-                    ) : (
-                      <a>cast</a>
-                    )}{" "}
-                  </span>
-                  <span className="card__rate">
-                    <i className="icon ion-ios-star"></i>
-                    {apiStatus === apiStatusConstants.success
-                      ? each.imdb_rating
-                      : sampleBg}
-                  </span>
-                </div>
+    <>
+      <Navbar />
+      <div
+        className="section section--first section--bg"
+        data-bg="img/section/section.jpg"
+      >
+        <div className="container">
+          <div className="row">
+            <h4 className="text-light ">All Web series</h4>
+
+            {apiStatus === apiStatusConstants.success ? (
+              <div className="d-flex flex-wrap">
+                {filterWebSeries.map((each, index) => (
+                  <Link
+                    to={`/webseriesdetails/${each.webseries_id}`}
+                    className="col-6 col-sm-4 col-lg-3 col-xl-2"
+                    key={index}
+                  >
+                    <div className="card p-0">
+                      <div className="card__cover">
+                        <img
+                          src={
+                            apiStatus === apiStatusConstants.success
+                              ? each.thumbnail_url
+                              : sampleBg
+                          }
+                          alt=""
+                        />
+                        <a href="#" className="card__play">
+                          <i className="icon ion-ios-play"></i>
+                        </a>
+                      </div>
+                      <div className="card__content">
+                        <h3 className="card__title">
+                          <a href="#">
+                            {apiStatus === apiStatusConstants.success
+                              ? each.webseries_title
+                              : sampleBg}
+                          </a>
+                        </h3>
+                        <span className="card__category">
+                          {" "}
+                          {apiStatus === apiStatusConstants.success ? (
+                            each.genres.map((each, index) => (
+                              <a key={index}>{each}</a>
+                            ))
+                          ) : (
+                            <a>cast</a>
+                          )}{" "}
+                        </span>
+                        <span className="card__rate">
+                          <i className="icon ion-ios-star"></i>
+                          {apiStatus === apiStatusConstants.success
+                            ? each.imdb_rating
+                            : sampleBg}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </Link>
-          ))}
+            ) : (
+              <div
+                className="loaderContainer p-5 m-auto w-100 "
+                style={{ height: "100vh" }}
+              >
+                <Audio color="white" />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

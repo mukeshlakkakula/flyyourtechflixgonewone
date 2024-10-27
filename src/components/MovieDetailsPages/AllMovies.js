@@ -593,7 +593,6 @@ const AllMovies = () => {
       {/* expected premiere */}
       <hr className="text-light" />
 
-      <AllWebseries />
       {/* end expected premiere */}
       {/* footer */}
 

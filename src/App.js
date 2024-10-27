@@ -20,7 +20,6 @@ import AllMovies from "./components/MovieDetailsPages/AllMovies";
 
 import AllWebseries from "./components/WebseriesDetailsPages/AllWebseries";
 import WebseriesDetails from "./components/WebseriesDetailsPages/WebseriesDetails";
-import YearRangeFilter from "./components/Pages/YearRangeFilter ";
 
 function App() {
   return (
@@ -30,9 +29,9 @@ function App() {
           <Route exact path="/" Component={Home} />
           <Route exact path="/admin/login" Component={AdminLogin} />
           <Route exact path="/moviedetails/:movieId" Component={MovieDetails} />
-          {/* {/* <Route exact path="/admin" Component={AdminPanel} /> */}
           <Route exact path="/admin/createmovie" Component={MovieCreate} />
           <Route exact path="/movies" Component={AllMovies} />{" "}
+          <Route exact path="/webseries" Component={AllWebseries} />{" "}
           <Route
             exact
             path="/webseriesdetails/:wId"

@@ -35,6 +35,7 @@ const Navbar = () => {
       setSearchActive(false);
     }
   };
+  console.log("isSearchActive", isSearchActive);
   const navigate = useNavigate();
   const toggleSearch = () => {
     setSearchActive(!isSearchActive);
