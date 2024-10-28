@@ -3,6 +3,8 @@ import React, { useEffect, useState, useRef } from "react";
 import noUiSlider from "nouislider";
 import wNumb from "wnumb";
 import "nouislider/dist/nouislider.css";
+import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa6";
 //imports for filter ends here
 import noImage from "../MovieDetailsPages/no_image_found.jpg.png";
 import { databases } from "../AppWrite/appwriteLoginConfig";
@@ -12,11 +14,17 @@ import { Link, useNavigate } from "react-router-dom";
 import sampleBg from "../../img/home/home__bg2.jpg";
 import Navbar from "../Pages/navbar";
 import Footer from "../Pages/Footer";
+import "./AllWebseries.css";
 
 const AllWebseries = () => {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
   const [searchedVal, setSearchedVal] = useState("");
+
+  //changes for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [moviesPerPage] = useState(20); // Customize number of movies per page
+  const [totalMovies, setTotalMovies] = useState(0);
 
   const apiStatusConstants = {
     initial: "INITAIL",
@@ -26,19 +34,23 @@ const AllWebseries = () => {
   };
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
 
-  const fetchMovies = async () => {
+  const fetchMovies = async (page = 1) => {
     setApiStatus(apiStatusConstants.inProgress);
+    const skip = (page - 1) * moviesPerPage; // Calculate skip for pagination
+
     try {
       const response = await databases.listDocuments(
         process.env.REACT_APP_DATABASE_ID,
         process.env.REACT_APP_WEBSERIES_COLLECTION_ID,
         [
           Query.orderDesc("release_date"),
-
-          // Sort by release_date in descending order
+          Query.limit(moviesPerPage), // Limit number of movies per page
+          Query.offset(skip), // Skip previous movies based on current page
         ]
       );
+
       setMovies(response.documents);
+      setTotalMovies(response.total); // Set total number of movies for pagination
       setApiStatus(apiStatusConstants.success);
     } catch (error) {
       console.error("Error fetching movies:", error);
@@ -115,9 +127,9 @@ const AllWebseries = () => {
     setIsExpanded(!isExpanded); // Toggle between expanded and collapsed states
   };
 
-  const fetchFilteredMovies = async () => {
+  const fetchFilteredMovies = async (page = 1) => {
     setApiStatus(apiStatusConstants.inProgress);
-
+    const skip = (page - 1) * moviesPerPage;
     // Initialize an array for query conditions
 
     // Add genre filter if a genre is selected and not "ALL"
@@ -149,6 +161,8 @@ const AllWebseries = () => {
 
       ...(ImdbQuery ? [ImdbQuery] : []),
       ...(yearFilterQuery.length > 0 ? yearFilterQuery : []), // Use yearFilterQuery directly as an array
+      Query.limit(moviesPerPage), // Limit the number of movies per page
+      Query.offset(skip), // Offset based on current page
       // Add any additional queries here
     ];
     console.log("queries", queries);
@@ -161,6 +175,7 @@ const AllWebseries = () => {
       );
 
       setMovies(response.documents);
+      setTotalMovies(response.total); // Store the total movies count for pagination
       setApiStatus(apiStatusConstants.success);
     } catch (error) {
       console.error("Error fetching movies:", error);
@@ -177,14 +192,6 @@ const AllWebseries = () => {
   const [range, setRange] = useState([1900, 2015]); // Initialize state for slider values
   const [startValue, setStartValue] = useState(range[0]);
   const [endValue, setEndValue] = useState(range[1]);
-
-  const filterBtn = () => {
-    if (applyFilter) {
-      fetchFilteredMovies();
-    } else {
-      fetchMovies();
-    }
-  };
 
   useEffect(() => {
     if (sliderRef.current) {
@@ -293,9 +300,132 @@ const AllWebseries = () => {
 
   //filter ends here
 
+  const totalPages = Math.ceil(totalMovies / moviesPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    {
+      applyFilter ? fetchMovies(page) : fetchFilteredMovies(page);
+    }
+  };
+
+  const filterBtn = () => {
+    if (applyFilter) {
+      fetchFilteredMovies();
+    } else {
+      fetchMovies();
+    }
+  };
+
   useEffect(() => {
-    fetchMovies();
+    fetchMovies(); // Fetch movies on initial load or page change
   }, []);
+
+  useEffect(() => {
+    {
+      applyFilter ? fetchFilteredMovies(currentPage) : fetchMovies(currentPage);
+    } // Fetch movies on initial load or page change
+  }, [currentPage]);
+  //pagination filter
+
+  const renderPaginationButtons = () => {
+    const buttons = [];
+    const maxVisibleButtons = 4;
+
+    // Add the first page button
+    buttons.push(
+      <button
+        key={1}
+        onClick={() => handlePageChange(1)}
+        className={`pagination-button ${
+          currentPage === 1 ? "active activepgbtn" : "notActivepgBtn"
+        }`}
+      >
+        1
+      </button>
+    );
+
+    // Calculate start and end for middle buttons
+    let startPage = Math.max(2, currentPage - 1);
+    let endPage = Math.min(totalPages - 1, currentPage + 1);
+
+    // Ensure we always show exactly maxVisibleButtons in the middle section
+    if (currentPage < totalPages - maxVisibleButtons) {
+      endPage = startPage + maxVisibleButtons - 1;
+    }
+    if (endPage > totalPages - 1) {
+      startPage = endPage - maxVisibleButtons + 1;
+    }
+
+    // Add ellipsis before the middle buttons if needed
+    if (startPage > 2) {
+      buttons.push(
+        <span key="left-ellipsis" className="pagination-ellipsis text-light">
+          ......
+        </span>
+      );
+    }
+
+    // Add middle page buttons
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={`pagination-button ${
+            currentPage === i ? "active activepgbtn" : "notActivepgBtn"
+          }`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    // Add ellipsis after middle buttons if needed
+    if (endPage < totalPages - 1) {
+      buttons.push(
+        <span key="right-ellipsis" className="pagination-ellipsis text-light">
+          ........
+        </span>
+      );
+    }
+
+    // Add the last page button
+    if (totalPages > 1) {
+      buttons.push(
+        <button
+          key={totalPages}
+          onClick={() => handlePageChange(totalPages)}
+          className={`pagination-button ${
+            currentPage === totalPages ? "active activepgbtn" : "notActivepgBtn"
+          }`}
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    return (
+      <div className="pagination-container_now col-12">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="pagination-button"
+        >
+          <FaChevronLeft />
+        </button>
+        {buttons}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="pagination-button"
+        >
+          <FaChevronRight />
+        </button>
+      </div>
+    );
+  };
+
   if (apiStatus === apiStatusConstants.success) {
   }
   let filterWebSeries = movies.filter((each) =>
@@ -321,10 +451,7 @@ const AllWebseries = () => {
   return (
     <>
       <Navbar />
-      <div
-        className="section section--first section--bg"
-        data-bg="img/section/section.jpg"
-      >
+      <div className="section section--first section--bg">
         <div className="container">
           <div className="row">
             <h4 className="text-light ">All Web series</h4>
@@ -543,7 +670,9 @@ const AllWebseries = () => {
             )}
           </div>{" "}
         </div>{" "}
-      </div>
+      </div>{" "}
+      {/* Pagination Controls */}
+      {renderPaginationButtons()}
       <Footer />
     </>
   );

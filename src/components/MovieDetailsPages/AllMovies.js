@@ -5,6 +5,9 @@ import { Query } from "appwrite";
 import noUiSlider from "nouislider";
 import wNumb from "wnumb";
 import "nouislider/dist/nouislider.css";
+
+import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa6";
 import noImage from "./no_image_found.jpg.png";
 
 //import of year filter ends here
@@ -20,6 +23,11 @@ import Footer from "../Pages/Footer";
 
 const AllMovies = () => {
   const [movies, setMovies] = useState([]);
+
+  //changes for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [moviesPerPage] = useState(20); // Customize number of movies per page
+  const [totalMovies, setTotalMovies] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to top
@@ -112,8 +120,9 @@ const AllMovies = () => {
   };
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
   console.log("apiInitial", apiStatus);
-  const fetchFilteredMovies = async () => {
+  const fetchFilteredMovies = async (page = 1) => {
     setApiStatus(apiStatusConstants.inProgress);
+    const skip = (page - 1) * moviesPerPage;
 
     // Initialize an array for query conditions
 
@@ -151,6 +160,8 @@ const AllMovies = () => {
       ...(selectedQualityQuery ? [selectedQualityQuery] : []),
       ...(ImdbQuery ? [ImdbQuery] : []),
       ...(yearFilterQuery.length > 0 ? yearFilterQuery : []), // Use yearFilterQuery directly as an array
+      Query.limit(moviesPerPage), // Limit the number of movies per page
+      Query.offset(skip), // Offset based on current page
       // Add any additional queries here
     ];
     console.log("queries", queries);
@@ -163,25 +174,32 @@ const AllMovies = () => {
       );
 
       setMovies(response.documents);
+      setTotalMovies(response.total); // Store the total movies count for pagination
       setApiStatus(apiStatusConstants.success);
     } catch (error) {
       console.error("Error fetching movies:", error);
       setApiStatus(apiStatusConstants.failure);
     }
   };
-  const fetchMovies = async () => {
+  const fetchMovies = async (page = 1) => {
     setApiStatus(apiStatusConstants.inProgress);
-
+    const skip = (page - 1) * moviesPerPage; // Calculate skip for pagination
     // Initialize an array for query conditions
 
     try {
       // Fetch movies with applied filters
       const response = await databases.listDocuments(
         process.env.REACT_APP_DATABASE_ID,
-        process.env.REACT_APP_MOVIE_DETAILS_COLLECTION_ID
+        process.env.REACT_APP_MOVIE_DETAILS_COLLECTION_ID,
+        [
+          Query.orderDesc("release_date"),
+          Query.limit(moviesPerPage), // Limit number of movies per page
+          Query.offset(skip), // Skip previous movies based on current page
+        ]
       );
 
       setMovies(response.documents);
+      setTotalMovies(response.total); // Set total number of movies for pagination
       setApiStatus(apiStatusConstants.success);
     } catch (error) {
       console.error("Error fetching movies:", error);
@@ -203,6 +221,121 @@ const AllMovies = () => {
   const [range, setRange] = useState([1900, 2015]); // Initialize state for slider values
   const [startValue, setStartValue] = useState(range[0]);
   const [endValue, setEndValue] = useState(range[1]);
+
+  //pagination
+
+  const totalPages = Math.ceil(totalMovies / moviesPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    {
+      applyFilter ? fetchMovies(page) : fetchFilteredMovies(page);
+    }
+  };
+
+  useEffect(() => {
+    {
+      applyFilter ? fetchFilteredMovies(currentPage) : fetchMovies(currentPage);
+    } // Fetch movies on initial load or page change
+  }, [currentPage]);
+
+  const renderPaginationButtons = () => {
+    const buttons = [];
+    const maxVisibleButtons = 4;
+
+    // Add the first page button
+    buttons.push(
+      <button
+        key={1}
+        onClick={() => handlePageChange(1)}
+        className={`pagination-button ${
+          currentPage === 1 ? "active activepgbtn" : "notActivepgBtn"
+        }`}
+      >
+        1
+      </button>
+    );
+
+    // Calculate start and end for middle buttons
+    let startPage = Math.max(2, currentPage - 1);
+    let endPage = Math.min(totalPages - 1, currentPage + 1);
+
+    // Ensure we always show exactly maxVisibleButtons in the middle section
+    if (currentPage < totalPages - maxVisibleButtons) {
+      endPage = startPage + maxVisibleButtons - 1;
+    }
+    if (endPage > totalPages - 1) {
+      startPage = endPage - maxVisibleButtons + 1;
+    }
+
+    // Add ellipsis before the middle buttons if needed
+    if (startPage > 2) {
+      buttons.push(
+        <span key="left-ellipsis" className="pagination-ellipsis text-light">
+          ......
+        </span>
+      );
+    }
+
+    // Add middle page buttons
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={`pagination-button ${
+            currentPage === i ? "active activepgbtn" : "notActivepgBtn"
+          }`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    // Add ellipsis after middle buttons if needed
+    if (endPage < totalPages - 1) {
+      buttons.push(
+        <span key="right-ellipsis" className="pagination-ellipsis text-light">
+          ........
+        </span>
+      );
+    }
+
+    // Add the last page button
+    if (totalPages > 1) {
+      buttons.push(
+        <button
+          key={totalPages}
+          onClick={() => handlePageChange(totalPages)}
+          className={`pagination-button ${
+            currentPage === totalPages ? "active activepgbtn" : "notActivepgBtn"
+          }`}
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    return (
+      <div className="pagination-container_now col-12">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="pagination-button"
+        >
+          <FaChevronLeft />
+        </button>
+        {buttons}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="pagination-button"
+        >
+          <FaChevronRight />
+        </button>
+      </div>
+    );
+  };
 
   const filterBtn = () => {
     if (applyFilter) {
@@ -682,6 +815,7 @@ const AllMovies = () => {
       </div>
       {/* end catalog */}
       {/* expected premiere */}
+      {renderPaginationButtons()}
       <hr className="text-light" />
 
       {/* end expected premiere */}
