@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { databases } from "../AppWrite/appwriteLoginConfig";
 import { Query } from "appwrite";
+import { Link, useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
+
 import sampleBg from "../../img/home/home__bg2.jpg";
 
 const NewItemMovies = () => {
@@ -103,7 +104,17 @@ const NewItemMovies = () => {
       resultView = null;
   }
 
-  return <div className="d-flex flex-wrap p-0"> {resultView} </div>;
+  return (
+    <div className="d-flex flex-wrap p-0">
+      {" "}
+      {resultView}
+      <div className="col-12">
+        <Link to="/movies#" className="section__btn">
+          Show more
+        </Link>
+      </div>{" "}
+    </div>
+  );
 };
 
 export default NewItemMovies;

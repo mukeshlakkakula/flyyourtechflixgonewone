@@ -226,7 +226,7 @@ const WebSeriesCreate = () => {
             />{" "}
             <label htmlFor="release_date">Release Date</label>
             <input
-              type="datetime-local" // Input type for date and time
+              type="date" // Input type for date and time
               value={release_date}
               className="p-2 rounded"
               onChange={(e) => setReleaseDate(e.target.value)}

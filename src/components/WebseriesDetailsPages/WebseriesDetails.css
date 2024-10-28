@@ -16,3 +16,21 @@
 .your-element::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
+
+.overflowContainer {
+  overflow: auto !important;
+}
+
+.overflowContainer::-webkit-scrollbar {
+  width: 2px; /* 2px width for vertical scrollbar */
+  height: 2px; /* 2px height for horizontal scrollbar */
+}
+
+.overflowContainer::-webkit-scrollbar-track {
+  background: transparent; /* Transparent track background */
+}
+
+.overflowContainer::-webkit-scrollbar-thumb {
+  background-color: #ff5860; /* Scrollbar thumb color */
+  border-radius: 10px; /* Rounded corners */
+}

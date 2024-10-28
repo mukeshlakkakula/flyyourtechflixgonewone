@@ -3,13 +3,13 @@ import React, { useEffect } from "react";
 import Navbar from "./navbar";
 import Carousel from "./Carousel";
 import Footer from "./Footer";
-import Partners from "./Partners";
+// import Partners from "./Partners";
 
 import "./Home.css";
 import NewReleases from "./NewReleases";
 import NewItemMovies from "./NewItemMovies";
 import NewTvSeries from "./NewTvSeries";
-import ExpectedPremier from "./ExpectedPremier";
+// import ExpectedPremier from "./ExpectedPremier";
 
 const Home = () => {
   useEffect(() => {
@@ -455,12 +455,12 @@ const Home = () => {
       </section>
       {/* end content */}
       {/* expected premiere */}
-      <ExpectedPremier />
+      {/* <ExpectedPremier /> */}
 
       {/* end expected premiere */}
       {/* partners */}
 
-      <Partners />
+      {/* <Partners /> */}
       {/* end partners */}
       {/* footer */}
       <Footer />

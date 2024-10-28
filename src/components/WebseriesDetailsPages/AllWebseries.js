@@ -5,6 +5,7 @@ import { Audio } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import sampleBg from "../../img/home/home__bg2.jpg";
 import Navbar from "../Pages/navbar";
+import Footer from "../Pages/Footer";
 
 const AllWebseries = () => {
   const [movies, setMovies] = useState([]);
@@ -119,9 +120,10 @@ const AllWebseries = () => {
                 <Audio color="white" />
               </div>
             )}
-          </div>
-        </div>
+          </div>{" "}
+        </div>{" "}
       </div>
+      <Footer />
     </>
   );
 };

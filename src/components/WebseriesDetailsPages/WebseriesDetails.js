@@ -183,7 +183,7 @@ const WebseriesDetails = () => {
   let mapSeasons =
     apiStatus === apiStatusConstants.success ? (
       movie.webseriesSeasons.map((each, index) => (
-        <div className="accordion__card" key={index}>
+        <div className="accordion__card " key={index}>
           <div className="card-header" id={`heading${index}`}>
             <button
               className="collapsed"
@@ -225,7 +225,14 @@ const WebseriesDetails = () => {
 
                 <tbody>
                   {each.webEpisodes.map((each, index) => (
-                    <tr onClick={() => setActiveEpisode(each)}>
+                    <tr
+                      key={index}
+                      onClick={() => {
+                        console.log("each", each);
+                        setActiveEpisode(each);
+                        setSelectedQuality(each["720p"]);
+                      }}
+                    >
                       <th>{each.episode_number}</th>
                       <td>{each.episode_title}</td>
                       <td>{each.duration}min</td>
@@ -444,69 +451,11 @@ const WebseriesDetails = () => {
                 {/* end player */}
                 {/* accordion */}
                 <div className="col-12 col-xl-6 scrollbar-dropdown">
-                  <div className="accordion " id="accordion">
-                    <div className="accordion__card"> {mapSeasons}</div>
+                  <div className="accordion overflowContainer" id="accordion">
+                    <div className="accordion__card "> {mapSeasons}</div>
                   </div>
                 </div>
                 {/* end accordion */}
-                <div className="col-12">
-                  <div className="details__wrap">
-                    {/* availables */}
-                    <div className="details__devices">
-                      <span className="details__devices-title">
-                        Available on devices:
-                      </span>
-                      <ul className="details__devices-list">
-                        <li>
-                          <i className="icon ion-logo-apple" />
-                          <span>IOS</span>
-                        </li>
-                        <li>
-                          <i className="icon ion-logo-android" />
-                          <span>Android</span>
-                        </li>
-                        <li>
-                          <i className="icon ion-logo-windows" />
-                          <span>Windows</span>
-                        </li>
-                        <li>
-                          <i className="icon ion-md-tv" />
-                          <span>Smart TV</span>
-                        </li>
-                      </ul>
-                    </div>
-                    {/* end availables */}
-                    {/* share */}
-                    <div className="details__share">
-                      <span className="details__share-title">
-                        Share with friends:
-                      </span>
-                      <ul className="details__share-list">
-                        <li className="facebook">
-                          <a href="#">
-                            <i className="icon ion-logo-facebook" />
-                          </a>
-                        </li>
-                        <li className="instagram">
-                          <a href="#">
-                            <i className="icon ion-logo-instagram" />
-                          </a>
-                        </li>
-                        <li className="twitter">
-                          <a href="#">
-                            <i className="icon ion-logo-twitter" />
-                          </a>
-                        </li>
-                        <li className="vk">
-                          <a href="#">
-                            <i className="icon ion-logo-vk" />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    {/* end share */}
-                  </div>
-                </div>
               </div>
             </div>
             {/* end details content */}

@@ -3,7 +3,7 @@ import { databases } from "../AppWrite/appwriteLoginConfig";
 
 import { v4 as uuidv4 } from "uuid";
 import "./MovieForm.css"; // Import the CSS file
-import AdminNavbar from "./AdminNavbar";
+// import AdminNavbar from "./AdminNavbar";
 
 const MovieUpdate = ({ movieId, onClose }) => {
   const [movieData, setMovieData] = useState(null);

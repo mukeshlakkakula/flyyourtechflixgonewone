@@ -37,6 +37,7 @@ const MovieList = () => {
         setMovies(movies.filter((movie) => movie.movie_id !== movieId));
         alert("Movie deleted successfully!");
         console.log("Movie deleted successfully!");
+        window.location.reload();
       } catch (error) {
         alert("Error deleting movie:", error);
         console.error("Error deleting movie:", error);
@@ -49,6 +50,7 @@ const MovieList = () => {
 
   const handleUpdateClick = (movieId) => {
     setSelectedMovieId(movieId);
+    window.scrollTo(0, 0);
   };
 
   const handleCloseUpdateForm = () => {
