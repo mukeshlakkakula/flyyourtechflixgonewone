@@ -39,7 +39,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const toggleSearch = () => {
     setSearchActive(!isSearchActive);
-    navigate("/movies");
+    navigate("/searchall");
     console.log("navigat", navigate, isSearchActive);
     // Ensure menu is deactivated if search is activated
     if (isMenuActive) {

@@ -5,6 +5,7 @@ import { Query } from "appwrite";
 import noUiSlider from "nouislider";
 import wNumb from "wnumb";
 import "nouislider/dist/nouislider.css";
+import noImage from "./no_image_found.jpg.png";
 
 //import of year filter ends here
 //importing search contxt here
@@ -15,7 +16,7 @@ import sampleBg from "../../img/home/home__bg2.jpg";
 import Navbar from "../Pages/navbar";
 // import ExpectedPremier from "../Pages/ExpectedPremier";
 import Footer from "../Pages/Footer";
-import AllWebseries from "../WebseriesDetailsPages/AllWebseries";
+// import AllWebseries from "../WebseriesDetailsPages/AllWebseries";
 
 const AllMovies = () => {
   const [movies, setMovies] = useState([]);
@@ -29,6 +30,8 @@ const AllMovies = () => {
 
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedQuality, setSelectedQuality] = useState("");
+
+  const [applyFilter, setApplyFilter] = useState(true);
 
   // Genre list
   const genreList = [
@@ -77,7 +80,7 @@ const AllMovies = () => {
   ];
 
   // Quality list
-  const qualityList = ["HD 1080", "HD 720", "DVD", "TS", "ALL"];
+  const qualityList = ["ALL", "HD 1080", "HD 720", "DVD", "TS"];
 
   // Handle genre change
 
@@ -109,13 +112,75 @@ const AllMovies = () => {
   };
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
   console.log("apiInitial", apiStatus);
+  const fetchFilteredMovies = async () => {
+    setApiStatus(apiStatusConstants.inProgress);
+
+    // Initialize an array for query conditions
+
+    // Add genre filter if a genre is selected and not "ALL"
+
+    const genreQuery =
+      selectedGenre && selectedGenre !== "ALL"
+        ? Query.contains("genres", selectedGenre)
+        : null;
+
+    const selectedQualityQuery =
+      selectedQuality && selectedQuality !== "ALL"
+        ? Query.equal("highest_video_quality", selectedQuality)
+        : null;
+
+    const ImdbQuery = Query.and([
+      Query.greaterThanEqual("imdb_rating", imdbStartVal),
+      Query.lessThanEqual("imdb_rating", imdbEndval),
+    ]);
+
+    const startYearRangeValue = new Date(
+      `${startValue}-01-01T00:00:00.000+00:00`
+    ).toISOString(); // Start date in ISO format
+    const endYearRangeValue = new Date(
+      `${endValue}-12-31T23:59:59.999+00:00`
+    ).toISOString(); // End date in ISO format
+
+    const yearFilterQuery = [
+      Query.between("release_date", startYearRangeValue, endYearRangeValue),
+    ];
+
+    // Build the queries array, filtering out null values
+    const queries = [
+      ...(genreQuery ? [genreQuery] : []),
+      ...(selectedQualityQuery ? [selectedQualityQuery] : []),
+      ...(ImdbQuery ? [ImdbQuery] : []),
+      ...(yearFilterQuery.length > 0 ? yearFilterQuery : []), // Use yearFilterQuery directly as an array
+      // Add any additional queries here
+    ];
+    console.log("queries", queries);
+    try {
+      // Fetch movies with applied filters
+      const response = await databases.listDocuments(
+        process.env.REACT_APP_DATABASE_ID,
+        process.env.REACT_APP_MOVIE_DETAILS_COLLECTION_ID,
+        queries
+      );
+
+      setMovies(response.documents);
+      setApiStatus(apiStatusConstants.success);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+      setApiStatus(apiStatusConstants.failure);
+    }
+  };
   const fetchMovies = async () => {
     setApiStatus(apiStatusConstants.inProgress);
+
+    // Initialize an array for query conditions
+
     try {
+      // Fetch movies with applied filters
       const response = await databases.listDocuments(
         process.env.REACT_APP_DATABASE_ID,
         process.env.REACT_APP_MOVIE_DETAILS_COLLECTION_ID
       );
+
       setMovies(response.documents);
       setApiStatus(apiStatusConstants.success);
     } catch (error) {
@@ -139,6 +204,13 @@ const AllMovies = () => {
   const [startValue, setStartValue] = useState(range[0]);
   const [endValue, setEndValue] = useState(range[1]);
 
+  const filterBtn = () => {
+    if (applyFilter) {
+      fetchFilteredMovies();
+    } else {
+      fetchMovies();
+    }
+  };
   useEffect(() => {
     if (sliderRef.current) {
       // Check if the slider has already been initialized
@@ -246,82 +318,82 @@ const AllMovies = () => {
   //imdb filter ends here
 
   // filtered movies starts here
-  let filteredMovies = [];
-  let matchesTitle;
-  if (apiStatus === apiStatusConstants.success) {
-    matchesTitle = movies.filter((each) =>
-      each.movie_title.toLowerCase().includes(searchText.toLowerCase())
-    );
-    console.log("matchTitle", matchesTitle);
+  // let filteredMovies = [];
+  // let matchesTitle;
+  // if (apiStatus === apiStatusConstants.success) {
+  //   matchesTitle = movies.filter((each) =>
+  //     each.movie_title.toLowerCase().includes(searchText.toLowerCase())
+  //   );
+  //   console.log("matchTitle", matchesTitle);
 
-    filteredMovies = matchesTitle.filter((each) => {
-      // Ensure that the movie title and searchText are not null or undefined
+  //   filteredMovies = matchesTitle.filter((each) => {
+  //     // Ensure that the movie title and searchText are not null or undefined
 
-      // console.log(
-      //   "matchesTitle",
-      //   matchesTitle,
-      //   "movie_title",
-      //   each.movie_title,
-      //   "searchText",
-      //   searchText
-      // );
+  //     // console.log(
+  //     //   "matchesTitle",
+  //     //   matchesTitle,
+  //     //   "movie_title",
+  //     //   each.movie_title,
+  //     //   "searchText",
+  //     //   searchText
+  //     // );
 
-      // Check if the selectedGenre exists in the genres array
-      const matchesGenre =
-        selectedGenre !== "" && selectedGenre !== "ALL"
-          ? each.genres?.some(
-              (genre) => genre?.toLowerCase() === selectedGenre?.toLowerCase()
-            )
-          : true;
+  //     // Check if the selectedGenre exists in the genres array
+  //     const matchesGenre =
+  //       selectedGenre !== "" && selectedGenre !== "ALL"
+  //         ? each.genres?.some(
+  //             (genre) => genre?.toLowerCase() === selectedGenre?.toLowerCase()
+  //           )
+  //         : true;
 
-      console.log(
-        "matchesGenre",
-        matchesGenre,
-        "selectedGenre",
-        selectedGenre,
-        "each.genres",
-        each.genres,
-        each
-      );
+  //     console.log(
+  //       "matchesGenre",
+  //       matchesGenre,
+  //       "selectedGenre",
+  //       selectedGenre,
+  //       "each.genres",
+  //       each.genres,
+  //       each
+  //     );
 
-      // Ensure selectedQuality and highest_video_quality are not undefined
-      const matchQuality =
-        selectedQuality !== "" && selectedQuality !== "ALL"
-          ? each.highest_video_quality?.toLowerCase() ===
-            selectedQuality?.toLowerCase()
-          : true;
+  //     // Ensure selectedQuality and highest_video_quality are not undefined
+  //     const matchQuality =
+  //       selectedQuality !== "" && selectedQuality !== "ALL"
+  //         ? each.highest_video_quality?.toLowerCase() ===
+  //           selectedQuality?.toLowerCase()
+  //         : true;
 
-      console.log(
-        "matchQuality",
-        matchQuality,
-        "each.highest_video_quality",
-        each.highest_video_quality?.toLowerCase(),
-        each,
-        "selectedQuality",
-        selectedQuality?.toLowerCase()
-      );
+  //     console.log(
+  //       "matchQuality",
+  //       matchQuality,
+  //       "each.highest_video_quality",
+  //       each.highest_video_quality?.toLowerCase(),
+  //       each,
+  //       "selectedQuality",
+  //       selectedQuality?.toLowerCase()
+  //     );
 
-      // Ensure imdb_rating is valid and within range
-      const matchImdb =
-        each.imdb_rating !== undefined &&
-        each.imdb_rating <= imdbEndval &&
-        each.imdb_rating >= imdbStartVal;
+  //     // Ensure imdb_rating is valid and within range
+  //     const matchImdb =
+  //       each.imdb_rating !== undefined &&
+  //       each.imdb_rating <= imdbEndval &&
+  //       each.imdb_rating >= imdbStartVal;
 
-      // Ensure release_date exists and extract the year
-      const dateObj = new Date(each.release_date);
-      const yearMovie = dateObj.getFullYear();
-      const matchYears = yearMovie >= startValue && yearMovie <= endValue;
+  //     // Ensure release_date exists and extract the year
+  //     const dateObj = new Date(each.release_date);
+  //     const yearMovie = dateObj.getFullYear();
+  //     const matchYears = yearMovie >= startValue && yearMovie <= endValue;
 
-      return matchQuality && matchImdb && matchYears && matchesGenre;
-    });
-  }
+  //     return matchQuality && matchImdb && matchYears && matchesGenre;
+  //   });
+  // }
 
   let resultView = "";
   switch (apiStatus) {
     case apiStatusConstants.success:
       resultView =
-        filteredMovies.length >= 1 ? (
-          filteredMovies.map((each, index) => (
+        movies.length >= 1 ? (
+          movies.map((each, index) => (
             <div
               className="col-6 col-sm-4 col-lg-3 col-xl-2"
               key={index}
@@ -364,12 +436,9 @@ const AllMovies = () => {
             </div>
           ))
         ) : (
-          <div className="w-100 d-flex text-center m-auto justify-content-center">
-            <img
-              className="rounded w-25"
-              src="https://i.pinimg.com/564x/89/39/06/893906d9df7228cc36e1b3679a0d1dac.jpg"
-              alt="No Result"
-            />
+          <div className="w-100 d-flex text-center m-auto justify-content-center flex-column align-items-center">
+            <img className="rounded w-25" src={noImage} alt="No Result" />
+            <h4 className="text-light">No item Found...</h4>
           </div>
         );
       break;
@@ -563,9 +632,31 @@ const AllMovies = () => {
                 </div>
 
                 {/* Filter Apply Button */}
-                <button className="filter__btn" type="button">
-                  Apply Filter
-                </button>
+                {applyFilter ? (
+                  <button
+                    className="filter__btn"
+                    type="button"
+                    onClick={() => {
+                      setApplyFilter(!applyFilter);
+                      filterBtn();
+                    }}
+                  >
+                    Apply Filter
+                  </button>
+                ) : (
+                  <button
+                    className="text-light p-3 rounded "
+                    style={{ backgroundColor: "#000" }}
+                    type="button"
+                    onClick={() => {
+                      setApplyFilter(!applyFilter);
+                      filterBtn();
+                    }}
+                  >
+                    Remove Filters
+                  </button>
+                )}
+
                 {/* End Filter Apply Button */}
               </div>
             </div>

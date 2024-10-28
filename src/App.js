@@ -20,6 +20,7 @@ import AllMovies from "./components/MovieDetailsPages/AllMovies";
 
 import AllWebseries from "./components/WebseriesDetailsPages/AllWebseries";
 import WebseriesDetails from "./components/WebseriesDetailsPages/WebseriesDetails";
+import SearchAll from "./components/Pages/SearchAll";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route exact path="/admin/createmovie" Component={MovieCreate} />
           <Route exact path="/movies" Component={AllMovies} />{" "}
           <Route exact path="/webseries" Component={AllWebseries} />{" "}
+          <Route exact path="/searchall" Component={SearchAll} />{" "}
           <Route
             exact
             path="/webseriesdetails/:wId"
