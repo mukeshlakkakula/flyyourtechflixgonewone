@@ -37,7 +37,7 @@ const MovieDetails = () => {
     failure: "FAILURE",
   };
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
-  console.log("apiInitial", apiStatus);
+  // console.log("apiInitial", apiStatus);
   const [selectedQuality, setSelectedQuality] = useState("");
   const fetchMovieData = async () => {
     setApiStatus(apiStatusConstants.inProgress);
@@ -50,7 +50,7 @@ const MovieDetails = () => {
       setMovie(response);
       setApiStatus(apiStatusConstants.success);
       setSelectedQuality(response.qualityUrls["1080p"]);
-      console.log("res", response);
+      // console.log("res", response);
     } catch (error) {
       console.error("Error fetching movie data:", error);
 

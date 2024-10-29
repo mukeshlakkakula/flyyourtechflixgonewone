@@ -22,7 +22,7 @@ const NewItemMovies = () => {
     failure: "FAILURE",
   };
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
-  console.log("apiInitial", apiStatus);
+  // console.log("apiInitial", apiStatus);
   const fetchMovies = async () => {
     setApiStatus(apiStatusConstants.inProgress);
     try {
@@ -40,10 +40,10 @@ const NewItemMovies = () => {
   useEffect(() => {
     fetchMovies();
   }, []);
-  if (apiStatus === apiStatusConstants.success) {
-    console.log(movies[0], apiStatus);
-    console.log("newrelease", movies[1], apiStatus, movies);
-  }
+  // if (apiStatus === apiStatusConstants.success) {
+  //   console.log(movies[0], apiStatus);
+  //   console.log("newrelease", movies[1], apiStatus, movies);
+  // }
 
   let resultView = "";
   switch (apiStatus) {

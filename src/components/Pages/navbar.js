@@ -35,18 +35,18 @@ const Navbar = () => {
       setSearchActive(false);
     }
   };
-  console.log("isSearchActive", isSearchActive);
+  // console.log("isSearchActive", isSearchActive);
   const navigate = useNavigate();
   const toggleSearch = () => {
     setSearchActive(!isSearchActive);
     navigate("/searchall");
-    console.log("navigat", navigate, isSearchActive);
+    // console.log("navigat", navigate, isSearchActive);
     // Ensure menu is deactivated if search is activated
     if (isMenuActive) {
       setMenuActive(false);
     }
   };
-  console.log("searchAtive", isSearchActive, "menuActive", isMenuActive);
+  // console.log("searchAtive", isSearchActive, "menuActive", isMenuActive);
 
   return (
     <>

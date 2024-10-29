@@ -44,7 +44,7 @@ const MovieUpdate = ({ movieId, onClose }) => {
           movieId
         );
 
-        console.log("res", response);
+        // console.log("res", response);
         setMovieData(response);
         setMovieName(response.movie_title);
         setDescription(response.description);

@@ -39,10 +39,10 @@ const NewTvSeries = () => {
   useEffect(() => {
     fetchMovies();
   }, []);
-  if (apiStatus === apiStatusConstants.success) {
-    console.log(movies[0], apiStatus);
-    console.log("newrelease", movies[1], apiStatus, movies);
-  }
+  // if (apiStatus === apiStatusConstants.success) {
+  //   console.log(movies[0], apiStatus);
+  //   console.log("newrelease", movies[1], apiStatus, movies);
+  // }
   return (
     <div className="d-flex flex-wrap">
       {apiStatus === apiStatusConstants.success ? (

@@ -92,8 +92,6 @@ const AllMovies = () => {
 
   // Handle genre change
 
-  console.log("filterForQual&genre", selectedGenre, selectedQuality);
-
   // Handle filter apply (dummy function)
 
   // State to control the size of the dropdown
@@ -119,7 +117,7 @@ const AllMovies = () => {
     failure: "FAILURE",
   };
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
-  console.log("apiInitial", apiStatus);
+
   const fetchFilteredMovies = async (page = 1) => {
     setApiStatus(apiStatusConstants.inProgress);
     const skip = (page - 1) * moviesPerPage;
@@ -164,7 +162,7 @@ const AllMovies = () => {
       Query.offset(skip), // Offset based on current page
       // Add any additional queries here
     ];
-    console.log("queries", queries);
+
     try {
       // Fetch movies with applied filters
       const response = await databases.listDocuments(
@@ -207,14 +205,9 @@ const AllMovies = () => {
     }
   };
 
-  console.log("searchingText", searchText);
   useEffect(() => {
     fetchMovies();
   }, []);
-  if (apiStatus === apiStatusConstants.success) {
-    console.log(movies[0], apiStatus);
-    console.log("newrelease", movies[1], apiStatus, movies);
-  }
 
   //year range filter from here
   const sliderRef = useRef(null);
@@ -391,7 +384,6 @@ const AllMovies = () => {
       }
     };
   }, []); // Run effect only on mount
-  console.log("yearsted", startValue, endValue);
 
   //year range filter ends here
 
@@ -447,7 +439,7 @@ const AllMovies = () => {
       }
     };
   }, []); // Run effect only on mount
-  console.log("imdbSted", imdbStartVal, imdbEndval);
+
   //imdb filter ends here
 
   // filtered movies starts here
@@ -563,14 +555,14 @@ const AllMovies = () => {
                       <a href="#">{each.movie_title}</a>
                     </h3>
                     <span className="card__category">
-                      <a href="#">
-                        {" "}
-                        {apiStatus === apiStatusConstants.success ? (
-                          each.genres.map((each) => <a>{each}</a>)
-                        ) : (
-                          <a>cast</a>
-                        )}{" "}
-                      </a>
+                      {" "}
+                      {apiStatus === apiStatusConstants.success ? (
+                        each.genres.map((each, index) => (
+                          <a key={index}>{each}</a>
+                        ))
+                      ) : (
+                        <a>cast</a>
+                      )}{" "}
                     </span>
                     <span className="card__rate">
                       <i className="icon ion-ios-star" />

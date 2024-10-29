@@ -68,10 +68,6 @@ const WebseriesSearch = () => {
   useEffect(() => {
     fetchMovies();
   }, []);
-  if (apiStatus === apiStatusConstants.success) {
-    console.log(movies[0], apiStatus);
-    console.log("movies1", movies[1], apiStatus, movies);
-  }
 
   const settings = {
     dots: false,

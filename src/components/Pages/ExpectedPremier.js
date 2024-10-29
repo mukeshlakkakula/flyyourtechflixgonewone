@@ -42,10 +42,10 @@ const ExpectedPremier = () => {
   useEffect(() => {
     fetchMovies();
   }, []);
-  if (apiStatus === apiStatusConstants.success) {
-    console.log(movies[0], apiStatus);
-    console.log("newrelease", movies[1], apiStatus, movies);
-  }
+  // if (apiStatus === apiStatusConstants.success) {
+  //   console.log(movies[0], apiStatus);
+  //   console.log("newrelease", movies[1], apiStatus, movies);
+  // }
   let resultView = "";
   switch (apiStatus) {
     case apiStatusConstants.success:

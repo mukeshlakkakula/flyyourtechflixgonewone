@@ -118,7 +118,7 @@ const MovieCreate = () => {
   const handleCheckboxChange = () => {
     setAvailabilityStatus((prevStatus) => !prevStatus); // Toggle between true and false
   };
-  console.log("avb_stat", availability_status);
+  // console.log("avb_stat", availability_status);
   return (
     <>
       <AdminNavbar />

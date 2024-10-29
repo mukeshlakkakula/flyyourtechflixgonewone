@@ -115,8 +115,6 @@ const AllWebseries = () => {
 
   // Handle genre change
 
-  console.log("filterForQual&genre", selectedGenre, selectedQuality);
-
   // Handle filter apply (dummy function)
 
   // State to control the size of the dropdown
@@ -165,7 +163,7 @@ const AllWebseries = () => {
       Query.offset(skip), // Offset based on current page
       // Add any additional queries here
     ];
-    console.log("queries", queries);
+
     try {
       // Fetch movies with applied filters
       const response = await databases.listDocuments(
@@ -182,10 +180,6 @@ const AllWebseries = () => {
       setApiStatus(apiStatusConstants.failure);
     }
   };
-  if (apiStatus === apiStatusConstants.success) {
-    console.log(movies[0], apiStatus);
-    console.log("newrelease", movies[1], apiStatus, movies);
-  }
 
   //year range filter from here
   const sliderRef = useRef(null);
@@ -240,7 +234,6 @@ const AllWebseries = () => {
       }
     };
   }, []); // Run effect only on mount
-  console.log("yearsted", startValue, endValue);
 
   //year range filter ends here
 
@@ -296,7 +289,6 @@ const AllWebseries = () => {
       }
     };
   }, []); // Run effect only on mount
-  console.log("imdbSted", imdbStartVal, imdbEndval);
 
   //filter ends here
 
@@ -431,10 +423,6 @@ const AllWebseries = () => {
   let filterWebSeries = movies.filter((each) =>
     each.webseries_title.toLowerCase().includes(searchedVal.toLowerCase())
   );
-  if (apiStatus === apiStatusConstants.success) {
-    console.log(movies[0], apiStatus);
-    console.log("newrelease", movies[1], apiStatus, movies);
-  }
 
   const noImageFound =
     apiStatus !== apiStatusConstants.inProgress && !applyFilter ? (

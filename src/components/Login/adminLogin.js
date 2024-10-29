@@ -20,7 +20,7 @@ const AdminLogin = () => {
   useEffect(() => {
     account.get().then(
       (response) => {
-        console.log("Already logged in:", response);
+        // console.log("Already logged in:", response);
         setStatus(`Already logged in:`);
       },
       (error) => {

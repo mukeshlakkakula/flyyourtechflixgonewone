@@ -48,7 +48,7 @@ const WebseriesDetails = () => {
     failure: "FAILURE",
   };
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
-  console.log("apiInitial", apiStatus);
+
   const [selectedQuality, setSelectedQuality] = useState("");
   const fetchMovieData = async () => {
     setApiStatus(apiStatusConstants.inProgress);
@@ -61,10 +61,10 @@ const WebseriesDetails = () => {
       setMovie(response);
 
       setApiStatus(apiStatusConstants.success);
-      console.log(
-        "fetchedData",
-        response.webseriesSeasons[0].webEpisodes[0]["720p"]
-      );
+      // console.log(
+      //   "fetchedData",
+      //   response.webseriesSeasons[0].webEpisodes[0]["720p"]
+      // );
       setActiveSeason(response.webseriesSeasons[0]);
       setSelectedQuality(response.webseriesSeasons[0].webEpisodes[0]["720p"]);
       setActiveEpisode(response.webseriesSeasons[0].webEpisodes[0]);
@@ -186,7 +186,7 @@ const WebseriesDetails = () => {
   };
 
   // Handle when the video is playing or paused
-  console.log("actSea", activeSeason);
+
   const handlePlayPause = (playing) => {
     if (!playing) {
       // Store the current time when paused
@@ -244,7 +244,6 @@ const WebseriesDetails = () => {
                     <tr
                       key={index}
                       onClick={() => {
-                        console.log("each", each);
                         setActiveEpisode(each);
                         setSelectedQuality(each["720p"]);
                       }}

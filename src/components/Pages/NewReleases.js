@@ -37,10 +37,10 @@ const NewReleases = () => {
   useEffect(() => {
     fetchMovies();
   }, []);
-  if (apiStatus === apiStatusConstants.success) {
-    console.log(movies[0], apiStatus);
-    console.log("newrelease", movies[1], apiStatus, movies);
-  }
+  // if (apiStatus === apiStatusConstants.success) {
+  //   console.log(movies[0], apiStatus);
+  //   console.log("newrelease", movies[1], apiStatus, movies);
+  // }
 
   const handleMovieClick = (movie_id) => {
     navigate(`/moviedetails/${movie_id}`); // Navigate to the movie details view

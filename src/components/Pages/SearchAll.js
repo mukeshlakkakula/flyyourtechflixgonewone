@@ -26,7 +26,7 @@ const SearchAll = () => {
   //   const sendSearchText = () => {
   //     setSearchText(navSearch);
   //   };
-  console.log("navSearch", navSearch);
+
   const handleSearchChange = (e) => {
     setNavSearch(e.target.value);
   };
@@ -44,18 +44,17 @@ const SearchAll = () => {
       setSearchActive(false);
     }
   };
-  console.log("isSearchActive", isSearchActive);
+
   const navigate = useNavigate();
   const toggleSearch = () => {
     setSearchActive(!isSearchActive);
 
-    console.log("navigat", navigate, isSearchActive);
     // Ensure menu is deactivated if search is activated
     if (isMenuActive) {
       setMenuActive(false);
     }
   };
-  console.log("searchAtive", isSearchActive, "menuActive", isMenuActive);
+
   //nav bar ends here
 
   // all movies starts from here
@@ -72,7 +71,7 @@ const SearchAll = () => {
     failure: "FAILURE",
   };
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
-  console.log("apiInitial", apiStatus);
+
   const fetchMovies = async () => {
     setApiStatus(apiStatusConstants.inProgress);
     try {
@@ -110,7 +109,7 @@ const SearchAll = () => {
       // Use yearFilterQuery directly as an array
       // Add any additional queries here
     ];
-    console.log("queriesMovie", queries, navSearch, searchQuery);
+
     try {
       // Fetch movies with applied filters
       const response = await databases.listDocuments(
@@ -130,10 +129,10 @@ const SearchAll = () => {
   useEffect(() => {
     fetchMovies();
   }, []);
-  if (apiStatus === apiStatusConstants.success) {
-    console.log(movies[0], apiStatus);
-    console.log("newrelease", movies[1], apiStatus, movies);
-  }
+  // if (apiStatus === apiStatusConstants.success) {
+  //   console.log(movies[0], apiStatus);
+  //   console.log("newrelease", movies[1], apiStatus, movies);
+  // }
 
   let resultView = "";
   switch (apiStatus) {
@@ -246,12 +245,7 @@ const SearchAll = () => {
       // Use yearFilterQuery directly as an array
       // Add any additional queries here
     ];
-    console.log(
-      "queriesMovie",
-      webseriesqueries,
-      navSearch,
-      searchwebseriesQuery
-    );
+
     try {
       // Fetch movies with applied filters
       const response = await databases.listDocuments(
@@ -270,10 +264,7 @@ const SearchAll = () => {
   useEffect(() => {
     fetchwebseries();
   }, []);
-  if (apiwebseriesStatus === apiwebseriesStatusConstants.success) {
-    console.log("webseries", webseries, apiwebseriesStatus);
-    console.log("newrelease", webseries[1], apiwebseriesStatus, webseries);
-  }
+
   //all webseries ends here
 
   const applySearchBtn = () => {
@@ -285,8 +276,6 @@ const SearchAll = () => {
       fetchwebseries();
     }
   };
-
-  console.log("apistatus", apiStatus);
 
   const noImageFound =
     apiStatus !== "INPROGRESS" ? (
