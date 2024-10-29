@@ -262,20 +262,20 @@ const WebSeriesCreate = () => {
               placeholder="Age Rating"
               required
             />
-            <label htmlFor="thumbnail_url">Thumbnail URL</label>
+            <label htmlFor="thumbnail_url">Poster Card image URL</label>
             <input
               type="url"
               value={thumbnail_url}
               onChange={(e) => setThumbnailUrl(e.target.value)}
-              placeholder="Thumbnail URL"
+              placeholder="image URL"
               required
             />{" "}
-            <label htmlFor="trailer_url">Trailer URL</label>
+            <label htmlFor="trailer_url">Video Thumbnail image URL</label>
             <input
               type="url"
               value={trailer_url}
               onChange={(e) => setTrailerUrl(e.target.value)}
-              placeholder="Trailer URL"
+              placeholder="image URL"
               required
             />
             <div>

@@ -328,7 +328,7 @@ const AllMovies = () => {
         {buttons}
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages || movies.length <= 1}
           className="pagination-button"
         >
           <FaChevronRight />
@@ -521,59 +521,66 @@ const AllMovies = () => {
   //   });
   // }
 
+  const noImageFound =
+    apiStatus !== apiStatusConstants.inProgress && !applyFilter ? (
+      <div className="w-100 d-flex text-center m-auto justify-content-center flex-column align-items-center">
+        <img className="rounded w-25" src={noImage} alt="No Result" />
+        <h4 className="text-light">No item Found...</h4>
+      </div>
+    ) : (
+      <div className="loaderContainer">
+        <Audio color="white" />
+      </div>
+    );
+
   let resultView = "";
   switch (apiStatus) {
     case apiStatusConstants.success:
       resultView =
-        movies.length >= 1 ? (
-          movies.map((each, index) => (
-            <div
-              className="col-6 col-sm-4 col-lg-3 col-xl-2"
-              key={index}
-              onClick={() => handleMovieClick(each.movie_id)}
-            >
-              <div className="card p-0">
-                <div className="card__cover">
-                  <img
-                    src={
-                      apiStatus === apiStatusConstants.success
-                        ? each.thumbnail_url
-                        : sampleBg
-                    }
-                    alt=""
-                  />
-                  <a href="#" className="card__play">
-                    <i className="icon ion-ios-play" />
-                  </a>
-                </div>
-                <div className="card__content">
-                  <h3 className="card__title">
-                    <a href="#">{each.movie_title}</a>
-                  </h3>
-                  <span className="card__category">
-                    <a href="#">
-                      {" "}
-                      {apiStatus === apiStatusConstants.success ? (
-                        each.genres.map((each) => <a>{each}</a>)
-                      ) : (
-                        <a>cast</a>
-                      )}{" "}
+        movies.length >= 1
+          ? movies.map((each, index) => (
+              <div
+                className="col-6 col-sm-4 col-lg-3 col-xl-2"
+                key={index}
+                onClick={() => handleMovieClick(each.movie_id)}
+              >
+                <div className="card p-0">
+                  <div className="card__cover">
+                    <img
+                      src={
+                        apiStatus === apiStatusConstants.success
+                          ? each.thumbnail_url
+                          : sampleBg
+                      }
+                      alt=""
+                    />
+                    <a href="#" className="card__play">
+                      <i className="icon ion-ios-play" />
                     </a>
-                  </span>
-                  <span className="card__rate">
-                    <i className="icon ion-ios-star" />
-                    {each.imdb_rating}
-                  </span>
+                  </div>
+                  <div className="card__content">
+                    <h3 className="card__title">
+                      <a href="#">{each.movie_title}</a>
+                    </h3>
+                    <span className="card__category">
+                      <a href="#">
+                        {" "}
+                        {apiStatus === apiStatusConstants.success ? (
+                          each.genres.map((each) => <a>{each}</a>)
+                        ) : (
+                          <a>cast</a>
+                        )}{" "}
+                      </a>
+                    </span>
+                    <span className="card__rate">
+                      <i className="icon ion-ios-star" />
+                      {each.imdb_rating}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <div className="w-100 d-flex text-center m-auto justify-content-center flex-column align-items-center">
-            <img className="rounded w-25" src={noImage} alt="No Result" />
-            <h4 className="text-light">No item Found...</h4>
-          </div>
-        );
+            ))
+          : noImageFound;
       break;
 
     case apiStatusConstants.inProgress:

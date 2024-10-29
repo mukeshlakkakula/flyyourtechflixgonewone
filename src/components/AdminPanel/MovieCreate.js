@@ -245,21 +245,21 @@ const MovieCreate = () => {
             required
           />
 
-          <label>Thumbnail URL</label>
+          <label>Poster Card image URL</label>
           <input
             type="url"
             value={thumbnail_url}
             onChange={(e) => setThumbnailUrl(e.target.value)}
-            placeholder="URL of the movie's thumbnail"
+            placeholder="image URL"
             required
           />
 
-          <label>Trailer URL</label>
+          <label>Video Thumbnail image URL</label>
           <input
             type="url"
             value={trailer_url}
             onChange={(e) => setTrailerUrl(e.target.value)}
-            placeholder="URL of the movie's trailer"
+            placeholder="image URL"
             required
           />
 

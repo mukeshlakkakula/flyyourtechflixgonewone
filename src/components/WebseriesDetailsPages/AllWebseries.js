@@ -23,7 +23,7 @@ const AllWebseries = () => {
 
   //changes for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [moviesPerPage] = useState(20); // Customize number of movies per page
+  const [moviesPerPage] = useState(2); // Customize number of movies per page
   const [totalMovies, setTotalMovies] = useState(0);
 
   const apiStatusConstants = {
@@ -417,7 +417,7 @@ const AllWebseries = () => {
         {buttons}
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages || movies.length <= 1}
           className="pagination-button"
         >
           <FaChevronRight />
