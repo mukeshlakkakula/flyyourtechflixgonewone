@@ -443,14 +443,14 @@ const SearchAll = () => {
         </header>
       </>
       <section className="home container">
-        <h4 className="text-light">Movies</h4>
+        <h4 className="text-light pt-4 p-2">Movies</h4>
 
         <div className="d-flex flex-wrap p-0">
           {movies.length > 0 ? resultView : noImageFound}
         </div>
 
         <hr className="text-light" />
-        <h4 className="text-light">Web Series</h4>
+        <h4 className="text-light p-2">Web Series</h4>
         <div className="d-flex flex-wrap p-0">
           <>
             {webseries.length > 0 ? (

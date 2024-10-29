@@ -301,8 +301,9 @@ const WebseriesDetails = () => {
                     <div className="row">
                       {/* card cover */}
                       <div className="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
-                        <div className="card__cover">
+                        <div className="card__cover ">
                           <img
+                            className="detailsIMage"
                             src={
                               apiStatus === apiStatusConstants.success
                                 ? movie.thumbnail_url

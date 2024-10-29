@@ -34,3 +34,31 @@
   background-color: #ff5860; /* Scrollbar thumb color */
   border-radius: 10px; /* Rounded corners */
 }
+
+.detailsIMage {
+  width: 100% !important;
+  height: 353px !important;
+}
+
+@media (min-width: 1024px) {
+  .detailsIMage {
+    width: 100% !important;
+    height: 353px !important;
+  }
+}
+
+/* Tablet (between 768px and 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .detailsIMage {
+    width: 100% !important;
+    height: 361px !important;
+  }
+}
+
+/* Mobile (<= 767px) */
+@media (max-width: 767px) {
+  .detailsIMage {
+    width: 100% !important;
+    height: 470px !important;
+  }
+}
