@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import $ from "jquery";
 import "malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css";
 import "malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js";
@@ -24,6 +25,20 @@ const WebseriesDetails = () => {
     window.scrollTo(0, 0); // Scroll to top
   }, []);
 
+  //devtools disable from here
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleBlur = () => {
+      // Redirect when window loses focus
+      navigate("/");
+    };
+
+    window.addEventListener("blur", handleBlur);
+    return () => window.removeEventListener("blur", handleBlur);
+  }, [navigate]);
+
+  //devtools disable to here
   const [activeSeason, setActiveSeason] = useState("");
   const [activeEpisode, setActiveEpisode] = useState("");
   const apiStatusConstants = {

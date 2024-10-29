@@ -613,7 +613,7 @@ const AllMovies = () => {
             <div className="col-12">
               <div className="section__wrap">
                 {/* section title */}
-                <h2 className="section__title">Catalog grid</h2>
+                <h2 className="section__title">All Movies</h2>
                 {/* end section title */}
                 {/* breadcrumb */}
                 <ul className="breadcrumb">

@@ -24,10 +24,7 @@ const Footer = () => {
             </small>
             <ul>
               <li>
-                <a href="#">Terms of Use</a>
-              </li>
-              <li>
-                <a href="#">Privacy Policy</a>
+                <a href="#">Flixgo </a>
               </li>
             </ul>
           </div>

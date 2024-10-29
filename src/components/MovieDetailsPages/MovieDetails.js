@@ -4,7 +4,7 @@ import ReactPlayer from "react-player";
 import { ImEqualizer2 } from "react-icons/im";
 //media player ends here
 import { databases } from "../AppWrite/appwriteLoginConfig";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
 import sampleBg from "../../img/home/home__bg2.jpg";
 import Navbar from "../Pages/navbar";
@@ -14,6 +14,22 @@ import "./MovieDetails.css";
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+
+  //devtools disable from here
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleBlur = () => {
+      // Redirect when window loses focus
+      navigate("/");
+    };
+
+    window.addEventListener("blur", handleBlur);
+    return () => window.removeEventListener("blur", handleBlur);
+  }, [navigate]);
+
+  //devtools disable to here
+
   const apiStatusConstants = {
     initial: "INITAIL",
     success: "SUCCESS",
