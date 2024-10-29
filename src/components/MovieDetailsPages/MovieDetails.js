@@ -282,6 +282,14 @@ const MovieDetails = () => {
                       ref={playerRef} // Assign ref to React Player
                       url={selectedQuality}
                       controls
+                      config={{
+                        youtube: { playerVars: { showinfo: 1 } },
+                        file: {
+                          attributes: {
+                            controlsList: "nodownload", // Prevent download
+                          },
+                        },
+                      }}
                       playing={isPlaying} // Control playback with isPlaying state
                       width="100%"
                       height="100%"
