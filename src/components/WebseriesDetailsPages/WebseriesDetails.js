@@ -7,6 +7,7 @@ import LinesEllipsis from "react-lines-ellipsis";
 import Navbar from "../Pages/navbar";
 import "./WebseriesDetails.css";
 //used from movieDetails starts from here
+import { ImEqualizer2 } from "react-icons/im";
 import ReactPlayer from "react-player";
 import { databases } from "../AppWrite/appwriteLoginConfig";
 import { useParams } from "react-router-dom";
@@ -400,16 +401,19 @@ const WebseriesDetails = () => {
                       controls
                       playing={isPlaying} // Control playback with isPlaying state
                       width="100%"
-                      height={playerHeight}
+                      height="100%"
                       light={
                         <img
                           src={
                             apiStatus === apiStatusConstants.success
-                              ? movie.thumbnail_url
+                              ? movie.trailer_url
                               : sampleBg
                           }
                           alt="Thumbnail"
-                          style={{ height: playerHeight, width: "100%" }}
+                          style={{
+                            height: playerHeight,
+                            width: "100%",
+                          }}
                         />
                       }
                       onReady={handlePlayerReady} // Call this function when the player is ready
@@ -419,12 +423,13 @@ const WebseriesDetails = () => {
                     />
 
                     {/* Quality Selector Icon */}
-                    <div
+                    <p
+                      style={{ fontSize: "0.7rem" }}
                       className="quality-icon"
                       onClick={() => setShowQualityOptions((prev) => !prev)}
                     >
-                      Q
-                    </div>
+                      <ImEqualizer2 />
+                    </p>
 
                     {showQualityOptions && (
                       <div className="quality-selector">

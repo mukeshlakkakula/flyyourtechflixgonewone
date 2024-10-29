@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 //mediaplayer from here
 import ReactPlayer from "react-player";
-
+import { ImEqualizer2 } from "react-icons/im";
 //media player ends here
 import { databases } from "../AppWrite/appwriteLoginConfig";
 import { useParams } from "react-router-dom";
@@ -143,6 +143,30 @@ const MovieDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to top
   }, []);
+
+  const [playerHeight, setPlayerHeight] = useState("172px"); // Default for small screens
+
+  useEffect(() => {
+    // Function to update the height based on window size
+    const updatePlayerHeight = () => {
+      const width = window.innerWidth;
+
+      if (width >= 1200) {
+        setPlayerHeight("270px"); // Large devices
+      } else if (width >= 768) {
+        setPlayerHeight("303px"); // Tablet view
+      } else {
+        setPlayerHeight("172px"); // Below tablet view
+      }
+    };
+
+    // Set initial height
+    updatePlayerHeight();
+
+    // Update height on window resize
+    window.addEventListener("resize", updatePlayerHeight);
+    return () => window.removeEventListener("resize", updatePlayerHeight);
+  }, []);
   return (
     <div>
       <Navbar />
@@ -264,11 +288,11 @@ const MovieDetails = () => {
                         <img
                           src={
                             apiStatus === apiStatusConstants.success
-                              ? movie.thumbnail_url
+                              ? movie.trailer_url
                               : sampleBg
                           }
                           alt="Thumbnail"
-                          style={{ height: "303px", width: "100%" }}
+                          style={{ height: playerHeight, width: "100%" }}
                         />
                       }
                       onReady={handlePlayerReady} // Call this function when the player is ready
@@ -278,12 +302,13 @@ const MovieDetails = () => {
                     />
 
                     {/* Quality Selector Icon */}
-                    <div
+                    <p
+                      style={{ fontSize: "0.7rem" }}
                       className="quality-icon"
                       onClick={() => setShowQualityOptions((prev) => !prev)}
                     >
-                      Q
-                    </div>
+                      <ImEqualizer2 />
+                    </p>
 
                     {showQualityOptions && (
                       <div className="quality-selector">
@@ -309,64 +334,6 @@ const MovieDetails = () => {
                 </div>
 
                 {/* end player */}
-                <div className="col-12">
-                  <div className="details__wrap">
-                    {/* availables */}
-                    <div className="details__devices">
-                      <span className="details__devices-title">
-                        Available on devices:
-                      </span>
-                      <ul className="details__devices-list">
-                        <li>
-                          <i className="icon ion-logo-apple" />
-                          <span>IOS</span>
-                        </li>
-                        <li>
-                          <i className="icon ion-logo-android" />
-                          <span>Android</span>
-                        </li>
-                        <li>
-                          <i className="icon ion-logo-windows" />
-                          <span>Windows</span>
-                        </li>
-                        <li>
-                          <i className="icon ion-md-tv" />
-                          <span>Smart TV</span>
-                        </li>
-                      </ul>
-                    </div>
-                    {/* end availables */}
-                    {/* share */}
-                    <div className="details__share">
-                      <span className="details__share-title">
-                        Share with friends:
-                      </span>
-                      <ul className="details__share-list">
-                        <li className="facebook">
-                          <a href="#">
-                            <i className="icon ion-logo-facebook" />
-                          </a>
-                        </li>
-                        <li className="instagram">
-                          <a href="#">
-                            <i className="icon ion-logo-instagram" />
-                          </a>
-                        </li>
-                        <li className="twitter">
-                          <a href="#">
-                            <i className="icon ion-logo-twitter" />
-                          </a>
-                        </li>
-                        <li className="vk">
-                          <a href="#">
-                            <i className="icon ion-logo-vk" />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    {/* end share */}
-                  </div>
-                </div>
               </div>
             </div>
             {/* end details content */}

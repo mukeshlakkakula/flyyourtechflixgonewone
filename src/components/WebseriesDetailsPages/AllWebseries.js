@@ -53,7 +53,7 @@ const AllWebseries = () => {
       setTotalMovies(response.total); // Set total number of movies for pagination
       setApiStatus(apiStatusConstants.success);
     } catch (error) {
-      console.error("Error fetching movies:", error);
+      console.error("Error fetching webSeries:", error);
       setApiStatus(apiStatusConstants.failure);
     }
   };
@@ -178,7 +178,7 @@ const AllWebseries = () => {
       setTotalMovies(response.total); // Store the total movies count for pagination
       setApiStatus(apiStatusConstants.success);
     } catch (error) {
-      console.error("Error fetching movies:", error);
+      console.error("Error fetching Webseries:", error);
       setApiStatus(apiStatusConstants.failure);
     }
   };
@@ -437,7 +437,7 @@ const AllWebseries = () => {
   }
 
   const noImageFound =
-    apiStatus !== "INPROGRESS" ? (
+    apiStatus !== apiStatusConstants.inProgress && !applyFilter ? (
       <div className="w-100 d-flex text-center m-auto justify-content-center flex-column align-items-center">
         <img className="rounded w-25" src={noImage} alt="No Result" />
         <h4 className="text-light">No item Found...</h4>
@@ -670,9 +670,9 @@ const AllWebseries = () => {
             )}
           </div>{" "}
         </div>{" "}
+        {/* Pagination Controls */}
+        {renderPaginationButtons()}
       </div>{" "}
-      {/* Pagination Controls */}
-      {renderPaginationButtons()}
       <Footer />
     </>
   );
