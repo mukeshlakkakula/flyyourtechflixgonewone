@@ -278,7 +278,7 @@ const MovieDetails = () => {
                               </a>{" "}
                             </li>
                           </ul>
-                          <div className="card__description card__description--details">
+                          <div className="card__description card__description--details your-element">
                             {apiStatus === apiStatusConstants.success
                               ? movie.description
                               : sampleBg}
