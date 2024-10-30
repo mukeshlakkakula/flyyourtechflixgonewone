@@ -21,6 +21,7 @@ import AllMovies from "./components/MovieDetailsPages/AllMovies";
 import AllWebseries from "./components/WebseriesDetailsPages/AllWebseries";
 import WebseriesDetails from "./components/WebseriesDetailsPages/WebseriesDetails";
 import SearchAll from "./components/Pages/SearchAll";
+import ProtectedRoutes from "./components/Pages/ProtectedRoutes";
 
 function App() {
   return (
@@ -30,7 +31,6 @@ function App() {
           <Route exact path="/" Component={Home} />
           <Route exact path="/admin/login" Component={AdminLogin} />
           <Route exact path="/moviedetails/:movieId" Component={MovieDetails} />
-          <Route exact path="/admin/createmovie" Component={MovieCreate} />
           <Route exact path="/movies" Component={AllMovies} />{" "}
           <Route exact path="/webseries" Component={AllWebseries} />{" "}
           <Route exact path="/searchall" Component={SearchAll} />{" "}
@@ -39,17 +39,21 @@ function App() {
             path="/webseriesdetails/:wId"
             Component={WebseriesDetails}
           />
-          <Route exact path="/admin/updatemovie" Component={MovieList} />
-          <Route
-            exact
-            path="/admin/createwebseries"
-            Component={WebSeriesCreate}
-          />
-          <Route
-            exact
-            path="/admin/updatewebseries"
-            Component={WebSeriesList}
-          />
+          <Route element={<ProtectedRoutes />}>
+            <Route exact path="/admin/createmovie" Component={MovieCreate} />
+            <Route exact path="/admin/updatemovie" Component={MovieList} />
+            <Route
+              exact
+              path="/admin/createwebseries"
+              Component={WebSeriesCreate}
+            />
+
+            <Route
+              exact
+              path="/admin/updatewebseries"
+              Component={WebSeriesList}
+            />
+          </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>{" "}

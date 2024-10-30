@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "appwrite": "^16.0.2",
     "jquery": "^3.7.1",
+    "js-cookie": "^3.0.5",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "nouislider": "^15.8.1",
     "plyr": "^3.7.8",

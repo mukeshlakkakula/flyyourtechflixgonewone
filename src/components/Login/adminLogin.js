@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { account } from "../AppWrite/appwriteLoginConfig";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Cookies from "js-cookie";
 
 import "./adminLogin.css"; // Create a CSS file to include your styles
 import bgImg from "../../img/section/section.jpg";
@@ -20,12 +21,13 @@ const AdminLogin = () => {
   useEffect(() => {
     account.get().then(
       (response) => {
-        // console.log("Already logged in:", response);
+        console.log("Already logged in:", response.status);
+        Cookies.set("loginStatus", "loggedIn", { expires: 1 });
         setStatus(`Already logged in:`);
       },
       (error) => {
         console.log("Not logged in", error);
-        setStatus(`Not logged in, ${error}`);
+        setStatus(`Not logged in please Login`);
       }
     );
   }, []);
@@ -43,6 +45,7 @@ const AdminLogin = () => {
       await account.createEmailPasswordSession(email, password);
       console.log("Admin logged in successfully");
       setStatus("Admin logged in successfully ");
+      Cookies.set("loginStatus", "loggedIn", { expires: 1 });
       navigate("/admin/createmovie");
       // Redirect to admin dashboard or some other page
     } catch (err) {
@@ -57,6 +60,7 @@ const AdminLogin = () => {
     try {
       await account.deleteSession("current");
       console.log("Logged out successfully");
+      Cookies.remove("loginStatus");
       setStatus("Logged out successfully");
       // Redirect to login page
     } catch (err) {

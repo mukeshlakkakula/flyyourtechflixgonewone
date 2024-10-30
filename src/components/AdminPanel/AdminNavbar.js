@@ -1,8 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { account } from "../AppWrite/appwriteLoginConfig";
+
 import "./AdminNavbar.css"; // External CSS file for styling
 import { FaHome } from "react-icons/fa";
+import Cookies from "js-cookie";
 const AdminNavbar = () => {
+  let navigate = useNavigate();
+  const handleLogout = async () => {
+    var result = window.confirm("Are you sure you want to logout");
+    if (result) {
+      try {
+        await account.deleteSession("current");
+        console.log("Logged out successfully");
+        Cookies.remove("loginStatus");
+
+        navigate("/admin/login");
+        // Redirect to login page
+      } catch (err) {
+        console.error("Logout failed", err);
+      }
+    }
+  };
   return (
     <nav className="admin-navbar">
       <ul className="admin-navbar-menu">
@@ -31,6 +51,12 @@ const AdminNavbar = () => {
             Update Webseries
           </Link>
         </li>
+        <button
+          onClick={handleLogout}
+          className="admin-navbar-item text-light "
+        >
+          Logout
+        </button>
       </ul>
     </nav>
   );

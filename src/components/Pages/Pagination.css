@@ -1,9 +1,0 @@
-.pagination-controls button {
-  margin: 0 5px;
-  padding: 5px 10px;
-}
-
-.pagination-controls button.active {
-  font-weight: bold;
-  background-color: #ddd;
-}
