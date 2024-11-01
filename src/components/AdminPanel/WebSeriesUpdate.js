@@ -542,7 +542,7 @@ const WebSeriesUpdate = ({ movieId, onClose }) => {
           <hr />
           <div className="d-flex justify-content-center">
             <button type="submit" className="w-50">
-              Add Web Series to server
+              Update Web Series to server
             </button>
           </div>
         </form>
