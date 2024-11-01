@@ -390,6 +390,7 @@ const WebSeriesUpdate = ({ movieId, onClose }) => {
                 required
               />
               {/* Episodes Input */}
+              <span className="text-danger">* Add atleast One Episode</span>
               <h2>Episodes</h2>
               {season.webEpisodes.map((episode, episodeIndex) => (
                 <div key={episode.episode_id}>

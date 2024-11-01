@@ -347,6 +347,7 @@ const WebSeriesCreate = () => {
                   placeholder="IMDb Rating (e.g., 8.5)"
                   required
                 />
+                <span className="text-danger">* Add atleast One Episode</span>
                 {/* Episodes Input */}
                 <h2>Episodes</h2>
                 {season.webEpisodes.map((episode, episodeIndex) => (
